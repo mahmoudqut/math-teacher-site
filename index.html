@@ -1,0 +1,4048 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ورقة عمل تفاعلية: الاقتران وأنواع الاقترانات | الصف التاسع الأساسي</title>
+  <style>
+    /* ==========================================================================
+       متغيرات التصميم الأساسية ولوحة الألوان الهادئة المتناسقة
+       ========================================================================== */
+    :root {
+      --bg-page: #F4F7FA;
+      --bg-card: #FFFFFF;
+      --bg-soft: #F8FAFC;
+      --bg-blue-soft: #EDF4FA;
+      --bg-green-soft: #ECF7F3;
+      --bg-amber-soft: #FDF6E7;
+      --bg-red-soft: #FDF0F0;
+
+      --primary: #1E4E79;
+      --primary-dark: #153959;
+      --primary-light: #2E6DA4;
+      --emerald: #1F7A63;
+      --emerald-dark: #165B4A;
+      --amber: #B7791F;
+      --amber-dark: #8E5C14;
+      --danger: #C53030;
+      --danger-dark: #9B2323;
+
+      --text-main: #1E293B;
+      --text-secondary: #475569;
+      --text-muted: #64748B;
+      --border-color: #DCE4EE;
+      --border-strong: #CBD5E1;
+
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --shadow-sm: 0 2px 8px rgba(30, 78, 121, 0.06);
+      --shadow-md: 0 8px 24px rgba(30, 78, 121, 0.09);
+      --shadow-lg: 0 16px 40px rgba(15, 23, 42, 0.16);
+      --transition: all 0.25s ease;
+    }
+
+    /* ==========================================================================
+       إعادة الضبط والخطوط العربية المريحة
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: 'Segoe UI', 'Tahoma', 'Arial', sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      line-height: 1.8;
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* تنسيق الكسور الرياضية العمودية بدقة عالية */
+    .frac {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      vertical-align: middle;
+      margin: 0 3px;
+      line-height: 1.15;
+      font-weight: 700;
+      font-size: 0.92em;
+    }
+
+    .frac .num {
+      padding: 0 4px 2px;
+      border-bottom: 2px solid currentColor;
+      text-align: center;
+      min-width: 18px;
+    }
+
+    .frac .den {
+      padding: 2px 4px 0;
+      text-align: center;
+      min-width: 18px;
+    }
+
+    .math {
+      font-weight: 700;
+      color: var(--primary-dark);
+      unicode-bidi: isolate;
+      display: inline;
+    }
+
+    .math sup {
+      font-size: 0.72em;
+      vertical-align: super;
+      line-height: 0;
+    }
+
+    .math sub {
+      font-size: 0.72em;
+      vertical-align: sub;
+      line-height: 0;
+    }
+
+    /* ==========================================================================
+       الشريط العلوي المدمج (يظهر عند التمرير أو بدء التفاعل)
+       ========================================================================== */
+    .sticky-bar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      z-index: 900;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 2px solid var(--primary);
+      box-shadow: var(--shadow-md);
+      padding: 10px 16px;
+      transform: translateY(-110%);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease;
+    }
+
+    .sticky-bar.visible {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .sticky-bar-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .sticky-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .sticky-title {
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: var(--primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .sticky-school {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .sticky-progress-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+      max-width: 300px;
+      min-width: 150px;
+    }
+
+    .progress-track {
+      flex: 1;
+      height: 10px;
+      background: #E2E8F0;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--emerald), var(--primary));
+      border-radius: 999px;
+      transition: width 0.35s ease;
+    }
+
+    .progress-label {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--primary);
+      white-space: nowrap;
+    }
+
+    .sticky-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ==========================================================================
+       الترويسة المدرسية الرسمية (مع مساحة آمنة أسفلها ومنع التداخل)
+       ========================================================================== */
+    .hero-wrapper {
+      padding: 20px 16px 0;
+      max-width: 1080px;
+      margin: 0 auto 28px;
+    }
+
+    .hero-header {
+      background: linear-gradient(135deg, #163C61 0%, #1E4E79 55%, #1F6E65 100%);
+      color: #FFFFFF;
+      border-radius: var(--radius-lg);
+      padding: 28px 28px 24px;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-header::before {
+      content: "";
+      position: absolute;
+      top: -60px;
+      left: -60px;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+      pointer-events: none;
+    }
+
+    .hero-header::after {
+      content: "";
+      position: absolute;
+      bottom: -80px;
+      right: -40px;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      pointer-events: none;
+    }
+
+    .hero-top-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+      padding-bottom: 18px;
+      margin-bottom: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .school-badge-box {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .school-emblem {
+      width: 58px;
+      height: 58px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1.5px solid rgba(255, 255, 255, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .school-name {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: 0.1px;
+    }
+
+    .subject-grade-line {
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      font-size: 0.94rem;
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .pill-light {
+      background: rgba(255, 255, 255, 0.16);
+      padding: 3px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.86rem;
+    }
+
+    .hero-title-area {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      margin-bottom: 20px;
+    }
+
+    .worksheet-tag {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      padding: 4px 16px;
+      border-radius: 999px;
+      font-size: 0.86rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .hero-title {
+      font-size: clamp(1.55rem, 3.2vw, 2.2rem);
+      font-weight: 900;
+      line-height: 1.35;
+    }
+
+    .hero-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .meta-item {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: var(--radius-md);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .meta-label {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .meta-value {
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: #FFFFFF;
+    }
+
+    /* ==========================================================================
+       شريط التنقل السريع بين الأقسام
+       ========================================================================== */
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 16px 60px;
+    }
+
+    .section-nav {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .nav-pill {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      text-decoration: none;
+      color: var(--text-main);
+      font-weight: 800;
+      font-size: 0.98rem;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      text-align: center;
+    }
+
+    .nav-pill:hover, .nav-pill.active {
+      border-color: var(--primary);
+      background: var(--bg-blue-soft);
+      color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .nav-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #FFFFFF;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.88rem;
+      flex-shrink: 0;
+    }
+
+    /* ==========================================================================
+       الأقسام والبطاقات
+       ========================================================================== */
+    .section-block {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      margin-bottom: 30px;
+      box-shadow: var(--shadow-sm);
+      scroll-margin-top: 90px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      padding-bottom: 16px;
+      margin-bottom: 22px;
+      border-bottom: 2px solid var(--bg-blue-soft);
+    }
+
+    .section-title-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFFFFF;
+      flex-shrink: 0;
+    }
+
+    .icon-blue { background: var(--primary); }
+    .icon-green { background: var(--emerald); }
+    .icon-amber { background: var(--amber); }
+
+    .section-title {
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: var(--primary-dark);
+    }
+
+    .section-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* القسم الأول: بطاقات القاعدة العلمية */
+    .rules-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .rule-card {
+      background: var(--bg-soft);
+      border: 1.5px solid var(--border-color);
+      border-right: 5px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      transition: var(--transition);
+    }
+
+    .rule-card:hover {
+      box-shadow: var(--shadow-sm);
+      border-color: var(--primary-light);
+    }
+
+    .rule-card.rule-green { border-right-color: var(--emerald); background: #F5FBF8; }
+    .rule-card.rule-amber { border-right-color: var(--amber); background: #FEFBF3; }
+    .rule-card.rule-purple { border-right-color: #3B5B8A; background: #F4F7FC; }
+
+    .rule-badge {
+      display: inline-block;
+      font-size: 0.8rem;
+      font-weight: 800;
+      padding: 3px 12px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+      background: var(--bg-blue-soft);
+      color: var(--primary);
+    }
+
+    .rule-green .rule-badge { background: var(--bg-green-soft); color: var(--emerald-dark); }
+    .rule-amber .rule-badge { background: var(--bg-amber-soft); color: var(--amber-dark); }
+
+    .rule-card h3 {
+      font-size: 1.12rem;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 10px;
+    }
+
+    .rule-card p {
+      font-size: 0.98rem;
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+    }
+
+    .rule-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .rule-list li {
+      position: relative;
+      padding-right: 22px;
+      font-size: 0.95rem;
+      color: var(--text-main);
+    }
+
+    .rule-list li::before {
+      content: "◆";
+      position: absolute;
+      right: 0;
+      top: 0;
+      color: var(--primary);
+      font-size: 0.78rem;
+    }
+
+    .rule-green .rule-list li::before { color: var(--emerald); }
+    .rule-amber .rule-list li::before { color: var(--amber); }
+
+    .formula-box {
+      background: #FFFFFF;
+      border: 1.5px dashed var(--primary-light);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      margin-top: 10px;
+      text-align: center;
+      font-weight: 800;
+      color: var(--primary-dark);
+      font-size: 1rem;
+    }
+
+    /* القسم الثاني: الأمثلة المحلولة */
+    .example-card {
+      background: var(--bg-soft);
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 22px;
+      margin-bottom: 22px;
+    }
+
+    .example-card:last-child {
+      margin-bottom: 0;
+    }
+
+    .example-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .example-tag {
+      background: var(--emerald);
+      color: #FFFFFF;
+      font-weight: 800;
+      font-size: 0.88rem;
+      padding: 4px 14px;
+      border-radius: 999px;
+    }
+
+    .example-title {
+      font-size: 1.12rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+    }
+
+    .diagrams-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin: 16px 0;
+    }
+
+    .diagrams-row-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .diagram-box {
+      background: #FFFFFF;
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .diagram-caption {
+      font-weight: 800;
+      font-size: 0.96rem;
+      color: var(--primary);
+      text-align: center;
+    }
+
+    .diagram-svg-wrap {
+      width: 100%;
+      max-width: 310px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .diagram-svg-wrap svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .diagram-analysis {
+      width: 100%;
+      background: var(--bg-soft);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      font-size: 0.92rem;
+      color: var(--text-main);
+      border-top: 3px solid var(--border-strong);
+    }
+
+    .diagram-analysis.status-ok { border-top-color: var(--emerald); background: var(--bg-green-soft); }
+    .diagram-analysis.status-no { border-top-color: var(--danger); background: var(--bg-red-soft); }
+
+    .solution-steps {
+      background: #FFFFFF;
+      border: 1.5px solid var(--border-color);
+      border-right: 4px solid var(--emerald);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.98rem;
+    }
+
+    .step-badge {
+      background: var(--bg-green-soft);
+      color: var(--emerald-dark);
+      font-weight: 800;
+      font-size: 0.84rem;
+      padding: 2px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+      margin-top: 3px;
+    }
+
+    .sub-example-box {
+      background: var(--bg-amber-soft);
+      border: 1.5px solid #EBD5A7;
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      margin-top: 6px;
+    }
+
+    /* ==========================================================================
+       القسم الثالث: التمارين التفاعلية
+       ========================================================================== */
+    .quiz-controls-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      background: var(--bg-soft);
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      margin-bottom: 20px;
+    }
+
+    .mode-switcher {
+      display: inline-flex;
+      background: #E6EEF6;
+      padding: 4px;
+      border-radius: var(--radius-sm);
+      gap: 4px;
+    }
+
+    .mode-btn {
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 0.88rem;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .mode-btn.active {
+      background: var(--primary);
+      color: #FFFFFF;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .quiz-legend {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .legend-dot {
+      display: inline-block;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      margin-left: 5px;
+      vertical-align: middle;
+    }
+
+    /* شريط أرقام الأسئلة (١ - ١٥) */
+    .q-map {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 22px;
+      justify-content: center;
+    }
+
+    .q-map-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      border: 1.5px solid var(--border-strong);
+      background: #FFFFFF;
+      color: var(--text-main);
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .q-map-btn:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .q-map-btn.answered {
+      background: var(--bg-blue-soft);
+      border-color: var(--primary);
+      color: var(--primary-dark);
+    }
+
+    .q-map-btn.current {
+      background: var(--primary);
+      border-color: var(--primary-dark);
+      color: #FFFFFF;
+      box-shadow: 0 4px 12px rgba(30, 78, 121, 0.28);
+    }
+
+    .q-map-btn.review-correct {
+      background: var(--emerald);
+      border-color: var(--emerald-dark);
+      color: #FFFFFF;
+    }
+
+    .q-map-btn.review-wrong {
+      background: var(--danger);
+      border-color: var(--danger-dark);
+      color: #FFFFFF;
+    }
+
+    /* بطاقة السؤال */
+    .question-card {
+      background: #FFFFFF;
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 22px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+
+    .question-card.hidden-step {
+      display: none;
+    }
+
+    .question-card.state-correct {
+      border-color: var(--emerald);
+      border-right: 5px solid var(--emerald);
+    }
+
+    .question-card.state-wrong {
+      border-color: var(--danger);
+      border-right: 5px solid var(--danger);
+    }
+
+    .q-top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #EEF2F7;
+    }
+
+    .q-badges {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+    .badge-num { background: var(--primary); color: #FFFFFF; }
+    .badge-type { background: var(--bg-blue-soft); color: var(--primary); }
+    .badge-easy { background: var(--bg-green-soft); color: var(--emerald-dark); }
+    .badge-medium { background: var(--bg-amber-soft); color: var(--amber-dark); }
+    .badge-hard { background: var(--bg-red-soft); color: var(--danger); }
+
+    /* زر نطق السؤال صوتياً */
+    .speak-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--bg-blue-soft);
+      color: var(--primary);
+      border: 1.5px solid #C5DBEE;
+      border-radius: 999px;
+      padding: 7px 14px;
+      font-family: inherit;
+      font-size: 0.86rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .speak-btn:hover {
+      background: var(--primary);
+      color: #FFFFFF;
+      border-color: var(--primary);
+    }
+
+    .speak-btn.speaking {
+      background: var(--emerald);
+      color: #FFFFFF;
+      border-color: var(--emerald);
+      animation: pulseSpeak 1.2s infinite;
+    }
+
+    @keyframes pulseSpeak {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(31, 122, 99, 0.45); }
+      50% { box-shadow: 0 0 0 8px rgba(31, 122, 99, 0); }
+    }
+
+    .q-text {
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 16px;
+      cursor: pointer;
+      padding: 8px 10px;
+      border-radius: var(--radius-sm);
+      transition: background 0.2s ease;
+    }
+
+    .q-text:hover {
+      background: var(--bg-soft);
+    }
+
+    .q-diagram-center {
+      display: flex;
+      justify-content: center;
+      margin: 10px 0 18px;
+      background: var(--bg-soft);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 14px;
+    }
+
+    /* خيارات الاختيار من متعدد */
+    .mcq-options {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .mcq-options.single-col {
+      grid-template-columns: 1fr;
+    }
+
+    .option-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      text-align: right;
+      background: var(--bg-soft);
+      border: 2px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      font-family: inherit;
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: var(--transition);
+      min-height: 54px;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      border-color: var(--primary-light);
+      background: var(--bg-blue-soft);
+    }
+
+    .option-btn.selected {
+      border-color: var(--primary);
+      background: #E4F0FB;
+      color: var(--primary-dark);
+      box-shadow: 0 0 0 3px rgba(30, 78, 121, 0.12);
+    }
+
+    .option-btn.opt-correct {
+      border-color: var(--emerald) !important;
+      background: var(--bg-green-soft) !important;
+      color: var(--emerald-dark) !important;
+    }
+
+    .option-btn.opt-wrong {
+      border-color: var(--danger) !important;
+      background: var(--bg-red-soft) !important;
+      color: var(--danger-dark) !important;
+    }
+
+    .option-btn:disabled {
+      cursor: default;
+    }
+
+    .opt-letter {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 1.5px solid var(--border-strong);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.9rem;
+      color: var(--primary);
+      flex-shrink: 0;
+    }
+
+    .option-btn.selected .opt-letter {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #FFFFFF;
+    }
+
+    .option-btn.opt-correct .opt-letter {
+      background: var(--emerald);
+      border-color: var(--emerald);
+      color: #FFFFFF;
+    }
+
+    .option-btn.opt-wrong .opt-letter {
+      background: var(--danger);
+      border-color: var(--danger);
+      color: #FFFFFF;
+    }
+
+    /* أزرار الصح أو الخطأ */
+    .tf-options {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .tf-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 16px;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--border-color);
+      background: var(--bg-soft);
+      font-family: inherit;
+      font-size: 1.08rem;
+      font-weight: 800;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: var(--transition);
+      min-height: 60px;
+    }
+
+    .tf-btn:hover:not(:disabled) {
+      border-color: var(--primary);
+      background: var(--bg-blue-soft);
+    }
+
+    .tf-btn.selected {
+      border-color: var(--primary);
+      background: #E4F0FB;
+      color: var(--primary-dark);
+      box-shadow: 0 0 0 3px rgba(30, 78, 121, 0.14);
+    }
+
+    .tf-btn.opt-correct {
+      border-color: var(--emerald) !important;
+      background: var(--bg-green-soft) !important;
+      color: var(--emerald-dark) !important;
+    }
+
+    .tf-btn.opt-wrong {
+      border-color: var(--danger) !important;
+      background: var(--bg-red-soft) !important;
+      color: var(--danger-dark) !important;
+    }
+
+    /* السحب والإفلات + النقر للوضع */
+    .dnd-hint {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      background: var(--bg-blue-soft);
+      padding: 8px 14px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dnd-pool {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 14px;
+      background: #F1F5F9;
+      border: 2px dashed var(--border-strong);
+      border-radius: var(--radius-md);
+      margin-bottom: 16px;
+      min-height: 64px;
+      align-items: center;
+    }
+
+    .dnd-pool-empty {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      font-style: italic;
+      width: 100%;
+      text-align: center;
+    }
+
+    .drag-chip {
+      background: #FFFFFF;
+      border: 2px solid var(--primary);
+      color: var(--primary-dark);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-weight: 700;
+      font-size: 0.94rem;
+      cursor: grab;
+      user-select: none;
+      -webkit-user-select: none;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      touch-action: manipulation;
+    }
+
+    .drag-chip:hover {
+      background: var(--bg-blue-soft);
+      transform: translateY(-2px);
+    }
+
+    .drag-chip.chip-selected {
+      background: var(--primary);
+      color: #FFFFFF;
+      box-shadow: 0 0 0 4px rgba(30, 78, 121, 0.25);
+      transform: scale(1.03);
+    }
+
+    .drag-chip.dragging {
+      opacity: 0.55;
+      cursor: grabbing;
+    }
+
+    .dnd-slots {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 12px;
+    }
+
+    .dnd-slot-card {
+      background: var(--bg-soft);
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .dnd-slot-label {
+      font-weight: 800;
+      color: var(--primary-dark);
+      font-size: 0.98rem;
+      text-align: center;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .drop-zone {
+      min-height: 58px;
+      border: 2px dashed #94A3B8;
+      border-radius: 10px;
+      background: #FFFFFF;
+      padding: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .drop-zone.drag-over, .drop-zone.ready-target {
+      border-color: var(--emerald);
+      background: var(--bg-green-soft);
+      box-shadow: 0 0 0 3px rgba(31, 122, 99, 0.14);
+    }
+
+    .drop-zone.filled {
+      border-style: solid;
+      border-color: var(--primary);
+      background: var(--bg-blue-soft);
+    }
+
+    .drop-zone.slot-correct {
+      border-color: var(--emerald);
+      background: var(--bg-green-soft);
+    }
+
+    .drop-zone.slot-wrong {
+      border-color: var(--danger);
+      background: var(--bg-red-soft);
+    }
+
+    .drop-placeholder {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    .placed-chip-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      width: 100%;
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: var(--text-main);
+      padding: 2px 4px;
+    }
+
+    .remove-chip-btn {
+      background: rgba(197, 48, 48, 0.12);
+      color: var(--danger);
+      border: none;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      font-weight: 900;
+      cursor: pointer;
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .remove-chip-btn:hover {
+      background: var(--danger);
+      color: #FFFFFF;
+    }
+
+    .slot-correction {
+      font-size: 0.84rem;
+      color: var(--emerald-dark);
+      background: #E6F6EF;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-weight: 700;
+    }
+
+    /* التغذية الراجعة بعد التصحيح */
+    .q-feedback {
+      margin-top: 14px;
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 0.94rem;
+      display: none;
+    }
+
+    .q-feedback.show {
+      display: block;
+    }
+
+    .q-feedback.fb-ok {
+      background: var(--bg-green-soft);
+      border: 1.5px solid #A7DEC9;
+      color: var(--emerald-dark);
+    }
+
+    .q-feedback.fb-no {
+      background: var(--bg-red-soft);
+      border: 1.5px solid #F2B8B8;
+      color: var(--danger-dark);
+    }
+
+    /* أزرار التنقل بين الأسئلة وزر التصحيح */
+    .step-nav-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 10px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: inherit;
+      font-weight: 800;
+      font-size: 0.96rem;
+      padding: 12px 22px;
+      border-radius: var(--radius-md);
+      border: none;
+      cursor: pointer;
+      transition: var(--transition);
+      min-height: 46px;
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none !important;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #FFFFFF;
+      box-shadow: 0 4px 12px rgba(30, 78, 121, 0.22);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    .btn-emerald {
+      background: linear-gradient(135deg, var(--emerald), #186451);
+      color: #FFFFFF;
+      box-shadow: 0 6px 18px rgba(31, 122, 99, 0.28);
+    }
+
+    .btn-emerald:hover:not(:disabled) {
+      background: var(--emerald-dark);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background: #FFFFFF;
+      color: var(--primary);
+      border: 1.5px solid var(--primary);
+    }
+
+    .btn-outline:hover:not(:disabled) {
+      background: var(--bg-blue-soft);
+    }
+
+    .btn-amber {
+      background: var(--amber);
+      color: #FFFFFF;
+    }
+
+    .btn-amber:hover:not(:disabled) {
+      background: var(--amber-dark);
+    }
+
+    .btn-sm {
+      padding: 8px 14px;
+      font-size: 0.85rem;
+      min-height: 38px;
+      border-radius: 10px;
+    }
+
+    .submit-zone {
+      text-align: center;
+      background: linear-gradient(135deg, #EDF4FA, #ECF7F3);
+      border: 2px solid #C6DCEB;
+      border-radius: var(--radius-lg);
+      padding: 26px 20px;
+      margin-top: 12px;
+    }
+
+    .submit-zone h3 {
+      font-size: 1.15rem;
+      color: var(--primary-dark);
+      margin-bottom: 8px;
+    }
+
+    .submit-zone p {
+      color: var(--text-secondary);
+      font-size: 0.94rem;
+      margin-bottom: 18px;
+    }
+
+    .btn-submit-main {
+      font-size: 1.12rem;
+      padding: 15px 38px;
+      border-radius: 14px;
+    }
+
+    /* ==========================================================================
+       بطاقة النتيجة النهائية
+       ========================================================================== */
+    .result-card {
+      display: none;
+      background: #FFFFFF;
+      border: 2px solid var(--emerald);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      margin-bottom: 26px;
+      box-shadow: var(--shadow-md);
+      text-align: center;
+    }
+
+    .result-card.show {
+      display: block;
+      animation: fadeUp 0.4s ease;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .lock-banner {
+      background: var(--bg-amber-soft);
+      border: 1.5px solid #EBD5A7;
+      color: var(--amber-dark);
+      padding: 10px 16px;
+      border-radius: var(--radius-sm);
+      font-weight: 700;
+      font-size: 0.92rem;
+      margin-bottom: 18px;
+      display: inline-block;
+    }
+
+    .result-score-circle {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      margin: 0 auto 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--primary), var(--emerald));
+      color: #FFFFFF;
+      box-shadow: 0 10px 26px rgba(30, 78, 121, 0.25);
+    }
+
+    .result-score-big {
+      font-size: 2rem;
+      font-weight: 900;
+      line-height: 1.1;
+    }
+
+    .result-score-sub {
+      font-size: 0.88rem;
+      opacity: 0.92;
+    }
+
+    .result-student-name {
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: var(--primary-dark);
+      margin-bottom: 6px;
+    }
+
+    .result-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      max-width: 620px;
+      margin: 18px auto 0;
+    }
+
+    .metric-box {
+      background: var(--bg-soft);
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 12px;
+    }
+
+    .metric-label {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .metric-val {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--primary);
+      margin-top: 2px;
+    }
+
+    /* ==========================================================================
+       التذييل (Footer)
+       ========================================================================== */
+    .page-footer {
+      max-width: 1080px;
+      margin: 0 auto 30px;
+      padding: 0 16px;
+    }
+
+    .footer-inner {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    /* ==========================================================================
+       النوافذ المنبثقة (Modals) والإشعارات (Toast)
+       ========================================================================== */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.58);
+      backdrop-filter: blur(4px);
+      z-index: 1200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+      animation: fadeIn 0.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-box {
+      background: #FFFFFF;
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 480px;
+      max-height: 92vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-lg);
+      padding: 26px;
+      position: relative;
+    }
+
+    .modal-box.modal-wide {
+      max-width: 960px;
+    }
+
+    .modal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+      border-bottom: 1.5px solid var(--border-color);
+    }
+
+    .modal-title {
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: var(--primary-dark);
+    }
+
+    .modal-close {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: none;
+      background: #F1F5F9;
+      color: var(--text-secondary);
+      font-size: 1.25rem;
+      font-weight: 900;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-close:hover {
+      background: var(--bg-red-soft);
+      color: var(--danger);
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 800;
+      font-size: 0.94rem;
+      margin-bottom: 6px;
+      color: var(--text-main);
+    }
+
+    .form-input, .form-select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      font-family: inherit;
+      font-size: 1rem;
+      color: var(--text-main);
+      background: #FFFFFF;
+      transition: border-color 0.2s ease;
+    }
+
+    .form-input:focus, .form-select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(30, 78, 121, 0.14);
+    }
+
+    .form-error {
+      color: var(--danger);
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin-top: 6px;
+      display: none;
+    }
+
+    .form-error.show {
+      display: block;
+    }
+
+    .modal-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+    /* لوحة المعلم */
+    .teacher-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .db-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.84rem;
+      font-weight: 800;
+      background: var(--bg-green-soft);
+      color: var(--emerald-dark);
+    }
+
+    .db-status-pill.local-mode {
+      background: var(--bg-amber-soft);
+      color: var(--amber-dark);
+    }
+
+    .db-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .kpi-card {
+      background: var(--bg-soft);
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      text-align: center;
+    }
+
+    .kpi-title {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .kpi-value {
+      font-size: 1.45rem;
+      font-weight: 900;
+      color: var(--primary);
+      margin-top: 4px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1.5px solid var(--border-color);
+      border-radius: var(--radius-md);
+    }
+
+    .results-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+      min-width: 640px;
+    }
+
+    .results-table th, .results-table td {
+      padding: 12px 14px;
+      text-align: right;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .results-table th {
+      background: var(--bg-blue-soft);
+      color: var(--primary-dark);
+      font-weight: 800;
+    }
+
+    .results-table tbody tr:hover {
+      background: var(--bg-soft);
+    }
+
+    .detail-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .detail-row {
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border-color);
+      font-size: 0.9rem;
+    }
+
+    .detail-row.ok { border-right: 4px solid var(--emerald); background: #F6FCF9; }
+    .detail-row.no { border-right: 4px solid var(--danger); background: #FEF6F6; }
+
+    /* إشعارات التوست */
+    .toast-container {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      z-index: 1500;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-width: 340px;
+    }
+
+    .toast {
+      background: var(--primary-dark);
+      color: #FFFFFF;
+      padding: 12px 18px;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      font-size: 0.92rem;
+      font-weight: 700;
+      animation: fadeUp 0.25s ease;
+    }
+
+    .toast.toast-success { background: var(--emerald); }
+    .toast.toast-warn { background: var(--amber); }
+    .toast.toast-error { background: var(--danger); }
+
+    /* ==========================================================================
+       التجاوب الكامل مع الهاتف والتابلت والآيباد
+       ========================================================================== */
+    @media (max-width: 900px) {
+      .diagrams-row { grid-template-columns: 1fr; }
+      .diagrams-row-2 { grid-template-columns: 1fr; }
+      .rules-grid { grid-template-columns: 1fr; }
+      .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 680px) {
+      .hero-wrapper { padding: 12px 12px 0; margin-bottom: 20px; }
+      .hero-header { padding: 20px 16px; border-radius: 16px; }
+      .hero-meta-grid { grid-template-columns: 1fr; }
+      .section-nav { grid-template-columns: 1fr; gap: 8px; }
+      .section-block { padding: 18px 14px; border-radius: 16px; }
+      .mcq-options { grid-template-columns: 1fr; }
+      .tf-options { grid-template-columns: 1fr; }
+      .result-metrics { grid-template-columns: 1fr; }
+      .sticky-bar-inner { gap: 8px; }
+      .sticky-school { display: none; }
+      .sticky-progress-wrap { min-width: 120px; }
+      .question-card { padding: 16px 14px; }
+      .modal-box { padding: 20px 16px; }
+      .toast-container { left: 12px; right: 12px; max-width: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =========================================================================
+       الشريط العلوي المدمج (يتفعّل عند التمرير أو بدء التفاعل مع الأسئلة)
+       ========================================================================= -->
+  <header class="sticky-bar" id="stickyBar" aria-label="شريط التقدم العلوي">
+    <div class="sticky-bar-inner">
+      <div class="sticky-info">
+        <div class="sticky-title">الاقتران وأنواع الاقترانات — الصف التاسع</div>
+        <div class="sticky-school">مدرسة مادما الثانوية المختلطة (أ)</div>
+      </div>
+
+      <div class="sticky-progress-wrap" aria-label="تقدم الإجابة">
+        <div class="progress-track">
+          <div class="progress-fill" id="stickyProgressFill"></div>
+        </div>
+        <div class="progress-label" id="stickyProgressText">٠ / ١٥</div>
+      </div>
+
+      <div class="sticky-actions">
+        <button type="button" class="btn btn-outline btn-sm" id="stickyTeacherBtn">
+          لوحة المعلم
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       الترويسة الرسمية للمدرسة والمعلم والمدير
+       ========================================================================= -->
+  <div class="hero-wrapper" id="topHeader">
+    <section class="hero-header">
+      <div class="hero-top-row">
+        <div class="school-badge-box">
+          <div class="school-emblem" aria-hidden="true">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+              <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+            </svg>
+          </div>
+          <div>
+            <div class="school-name">مدرسة مادما الثانوية المختلطة (أ)</div>
+            <div class="subject-grade-line">
+              <span class="pill-light">المادة: رياضيات</span>
+              <span class="pill-light">الصف: التاسع الأساسي</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <button type="button" class="btn btn-sm" style="background: rgba(255,255,255,0.18); color: #fff; border: 1px solid rgba(255,255,255,0.35);" id="heroTeacherBtn">
+            لوحة المعلم (سجل النتائج)
+          </button>
+        </div>
+      </div>
+
+      <div class="hero-title-area">
+        <span class="worksheet-tag">ورقة عمل تدريبية تفاعلية</span>
+        <h1 class="hero-title">الاقتران وأنواع الاقترانات</h1>
+      </div>
+
+      <div class="hero-meta-grid">
+        <div class="meta-item">
+          <span class="meta-label">إعداد المعلم:</span>
+          <span class="meta-value">محمود عبد الله قط</span>
+        </div>
+        <div class="meta-item">
+          <span class="meta-label">مدير المدرسة:</span>
+          <span class="meta-value">رئيف محمد نصار</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- =========================================================================
+       المحتوى الرئيسي
+       ========================================================================= -->
+  <main class="container">
+
+    <!-- شريط التنقل السريع بين الأقسام الثلاثة -->
+    <nav class="section-nav" aria-label="التنقل السريع بين الأقسام">
+      <a href="#section-rules" class="nav-pill active">
+        <span class="nav-num">١</span>
+        <span>القاعدة العلمية</span>
+      </a>
+      <a href="#section-examples" class="nav-pill">
+        <span class="nav-num">٢</span>
+        <span>الأمثلة المحلولة</span>
+      </a>
+      <a href="#section-exercises" class="nav-pill">
+        <span class="nav-num">٣</span>
+        <span>التمارين التفاعلية (١٥ سؤالاً)</span>
+      </a>
+    </nav>
+
+    <!-- =======================================================================
+         القسم الأول: القاعدة العلمية
+         ======================================================================= -->
+    <section class="section-block" id="section-rules">
+      <div class="section-header">
+        <div class="section-title-group">
+          <div class="section-icon icon-blue" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+            </svg>
+          </div>
+          <div>
+            <h2 class="section-title">القسم الأول: القاعدة العلمية</h2>
+            <p class="section-subtitle">المفاهيم والتعريفات الأساسية لدرس الاقتران وأنواع الاقترانات</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="rules-grid">
+        <!-- البطاقة ١: تعريف الاقتران -->
+        <article class="rule-card">
+          <span class="rule-badge">المفهوم الأول</span>
+          <h3>تعريف الاقتران</h3>
+          <p>
+            الاقتران <span class="math">ق</span> هو علاقة من المجموعة <span class="math">أ</span> إلى المجموعة <span class="math">ب</span>
+            (تُكتب <span class="math">ق : أ ← ب</span>)، بحيث يرتبط <strong>كل عنصر</strong> من عناصر <span class="math">أ</span>
+            <strong>بعنصر واحد فقط</strong> من عناصر <span class="math">ب</span>.
+          </p>
+          <ul class="rule-list">
+            <li>تُسمّى المجموعة <span class="math">أ</span> <strong>مجال</strong> الاقتران <span class="math">ق</span>.</li>
+            <li>تُسمّى المجموعة <span class="math">ب</span> <strong>المجال المقابل</strong> للاقتران <span class="math">ق</span>.</li>
+            <li>تُسمّى مجموعة صُور العناصر <strong>المدى</strong>، ويكون دائماً: <span class="math">المدى ⊆ المجال المقابل</span>.</li>
+            <li>إذا كان الزوج المرتب <span class="math">(س ، ص) ∈ ق</span>، فإننا نكتب <span class="math">ق(س) = ص</span>، وتُسمّى <span class="math">ص</span> صورة العنصر <span class="math">س</span>.</li>
+          </ul>
+        </article>
+
+        <!-- البطاقة ٢: الاقتران الشامل -->
+        <article class="rule-card rule-green">
+          <span class="rule-badge">المفهوم الثاني</span>
+          <h3>الاقتران الشامل</h3>
+          <p>
+            يُسمّى الاقتران <span class="math">ق : أ ← ب</span> <strong>اقتراناً شاملاً</strong> إذا كان مداه يساوي مجاله المقابل؛ أي أن كل عنصر في المجال المقابل هو صورة لعنصر واحد على الأقل من عناصر المجال.
+          </p>
+          <div class="formula-box">
+            الاقتران شامل ⇔ المدى = المجال المقابل
+          </div>
+        </article>
+
+        <!-- البطاقة ٣: الاقتران الواحد لواحد -->
+        <article class="rule-card rule-amber">
+          <span class="rule-badge">المفهوم الثالث</span>
+          <h3>الاقتران الواحد لواحد</h3>
+          <p>
+            يُسمّى الاقتران <span class="math">ق : أ ← ب</span> <strong>اقتراناً واحداً لواحد</strong> إذا كان كل عنصر في المدى صورة لعنصر واحد فقط في المجال.
+          </p>
+          <ul class="rule-list">
+            <li>لكل <span class="math">س<sub>١</sub> ، س<sub>٢</sub></span> في المجال: إذا كان <span class="math">س<sub>١</sub> ≠ س<sub>٢</sub></span> فإن <span class="math">ق(س<sub>١</sub>) ≠ ق(س<sub>٢</sub>)</span>.</li>
+            <li>إذا وُجد <span class="math">س<sub>١</sub> ≠ س<sub>٢</sub></span> بحيث <span class="math">ق(س<sub>١</sub>) = ق(س<sub>٢</sub>)</span>، فإن الاقتران <span class="math">ق</span> <strong>ليس واحداً لواحد</strong>.</li>
+          </ul>
+        </article>
+
+        <!-- البطاقة ٤: اقتران التناظر -->
+        <article class="rule-card rule-purple">
+          <span class="rule-badge">المفهوم الرابع</span>
+          <h3>اقتران التناظر</h3>
+          <p>
+            يُسمّى الاقتران <span class="math">ق : أ ← ب</span> <strong>اقتران تناظر</strong> إذا حقّق الشرطين الآتيين معاً:
+          </p>
+          <ul class="rule-list">
+            <li><strong>الشرط الأول:</strong> أن يكون الاقتران <span class="math">ق</span> <strong>واحداً لواحد</strong>.</li>
+            <li><strong>الشرط الثاني:</strong> أن يكون الاقتران <span class="math">ق</span> <strong>شاملاً</strong>.</li>
+          </ul>
+          <div class="formula-box">
+            اقتران تناظر ⇔ واحد لواحد + شامل معاً
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         القسم الثاني: الأمثلة المحلولة
+         ======================================================================= -->
+    <section class="section-block" id="section-examples">
+      <div class="section-header">
+        <div class="section-title-group">
+          <div class="section-icon icon-green" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 11 12 14 22 4"/>
+              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+            </svg>
+          </div>
+          <div>
+            <h2 class="section-title">القسم الثاني: الأمثلة المحلولة</h2>
+            <p class="section-subtitle">تطبيقات محلولة خطوة بخطوة مع مخططات سهمية دقيقة رياضياً</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- مثال (١) -->
+      <div class="example-card">
+        <div class="example-head">
+          <span class="example-tag">مثال (١)</span>
+          <h3 class="example-title">تمييز الاقتران من خلال المخطط السهمي</h3>
+        </div>
+        <p style="color: var(--text-secondary); margin-bottom: 10px;">
+          تأمل العلاقات الممثلة بالمخططات السهمية الآتية من المجموعة <span class="math">س = {١، ٢، ٣}</span> إلى المجموعة <span class="math">ص = {٣، ٥، ٧، ٨}</span>، ثم حدد أيّها يُمثّل اقتراناً مع التفسير:
+        </p>
+
+        <div class="diagrams-row">
+          <!-- الشكل أ -->
+          <div class="diagram-box">
+            <div class="diagram-caption">الشكل (أ)</div>
+            <div class="diagram-svg-wrap" id="ex1-svg-a"></div>
+            <div class="diagram-analysis status-ok">
+              <strong>التحليل والحل:</strong><br/>
+              صورة ١ هي ٣، وصورة ٢ هي ٥، وصورة ٣ هي ٧. كل عنصر في <span class="math">س</span> ارتبط بعنصر واحد فقط في <span class="math">ص</span>.<br/>
+              <strong>النتيجة:</strong> العلاقة <strong>اقتران</strong>.<br/>
+              • المجال = <span class="math">{١، ٢، ٣}</span><br/>
+              • المجال المقابل = <span class="math">{٣، ٥، ٧، ٨}</span><br/>
+              • المدى = <span class="math">{٣، ٥، ٧}</span>
+            </div>
+          </div>
+
+          <!-- الشكل ب -->
+          <div class="diagram-box">
+            <div class="diagram-caption">الشكل (ب)</div>
+            <div class="diagram-svg-wrap" id="ex1-svg-b"></div>
+            <div class="diagram-analysis status-no">
+              <strong>التحليل والحل:</strong><br/>
+              صورة ١ هي ٣، وصورة ٢ هي ٥، أما العنصر <strong>٣</strong> في المجموعة <span class="math">س</span> فلم يخرج منه أي سهم (ليس له صورة).<br/>
+              <strong>النتيجة:</strong> العلاقة <strong>ليست اقتراناً</strong>.
+            </div>
+          </div>
+
+          <!-- الشكل ج -->
+          <div class="diagram-box">
+            <div class="diagram-caption">الشكل (ج)</div>
+            <div class="diagram-svg-wrap" id="ex1-svg-c"></div>
+            <div class="diagram-analysis status-no">
+              <strong>التحليل والحل:</strong><br/>
+              صورة ١ هي ٣، وصورة ٣ هي ٧، أما العنصر <strong>٢</strong> في المجموعة <span class="math">س</span> فله <strong>صورتان هما ٥ و ٨</strong>.<br/>
+              <strong>النتيجة:</strong> العلاقة <strong>ليست اقتراناً</strong>.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- مثال (٢) -->
+      <div class="example-card">
+        <div class="example-head">
+          <span class="example-tag">مثال (٢)</span>
+          <h3 class="example-title">قاعدة الاقتران وإيجاد الصور وقيمة المجهول</h3>
+        </div>
+        <p style="color: var(--text-secondary);">
+          إذا كانت <span class="math">ص</span> مجموعة الأعداد الصحيحة، وكان الاقتران <span class="math">ق : ص ← ص</span> بحيث:
+          <span class="math">ق(س) = ٢س + ١</span>.
+        </p>
+
+        <div class="solution-steps">
+          <div class="step-item">
+            <span class="step-badge">الخطوة ١</span>
+            <div>
+              <strong>إيجاد صور العناصر <span class="math">-٢ ، ٠ ، ٣</span> بالتعويض في قاعدة الاقتران:</strong><br/>
+              • <span class="math">ق(-٢) = ٢ × (-٢) + ١ = -٤ + ١ = -٣</span><br/>
+              • <span class="math">ق(٠) = ٢ × ٠ + ١ = ٠ + ١ = ١</span><br/>
+              • <span class="math">ق(٣) = ٢ × ٣ + ١ = ٦ + ١ = ٧</span>
+            </div>
+          </div>
+
+          <div class="step-item">
+            <span class="step-badge">الخطوة ٢</span>
+            <div>
+              <strong>إذا كان الزوج المرتب <span class="math">(س ، ١١)</span> يحقق قاعدة الاقتران، فما قيمة <span class="math">س</span>؟</strong><br/>
+              الزوج المرتب <span class="math">(س ، ١١)</span> يعني أن <span class="math">ق(س) = ١١</span>:<br/>
+              <span class="math">٢س + ١ = ١١</span> ← نطرح ١ من الطرفين ← <span class="math">٢س = ١٠</span> ← نقسم الطرفين على ٢ ← <span class="math">س = ٥</span>.
+            </div>
+          </div>
+
+          <div class="sub-example-box">
+            <strong>مثال فرعي (التعويض بالكسور):</strong>
+            إذا كان <span class="math">ق : ح ← ح</span> بحيث <span class="math">ق(س) = س<sup>٢</sup></span>، أجد <span class="math">ق(<span class="frac"><span class="num">١</span><span class="den">٢</span></span>)</span>:<br/>
+            <span class="math">
+              ق(<span class="frac"><span class="num">١</span><span class="den">٢</span></span>)
+              = (<span class="frac"><span class="num">١</span><span class="den">٢</span></span>)<sup>٢</sup>
+              = <span class="frac"><span class="num">١</span><span class="den">٢</span></span> × <span class="frac"><span class="num">١</span><span class="den">٢</span></span>
+              = <span class="frac"><span class="num">١</span><span class="den">٤</span></span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- مثال (٣) -->
+      <div class="example-card">
+        <div class="example-head">
+          <span class="example-tag">مثال (٣)</span>
+          <h3 class="example-title">تحديد نوع الاقتران (شامل، واحد لواحد، تناظر)</h3>
+        </div>
+
+        <div class="diagrams-row diagrams-row-2">
+          <!-- الرسم الأول -->
+          <div class="diagram-box">
+            <div class="diagram-caption">الاقتران الأول: ق : أ ← ب</div>
+            <div class="diagram-svg-wrap" id="ex3-svg-1"></div>
+            <div class="diagram-analysis status-ok">
+              <strong>الحل خطوة بخطوة:</strong><br/>
+              ١) كل عنصر في المدى هو صورة لعنصر واحد فقط في المجال ← <strong>اقتران واحد لواحد</strong>.<br/>
+              ٢) المدى = <span class="math">{٣، ٤، ٧، ٩}</span> = المجال المقابل <span class="math">ب</span> ← <strong>اقتران شامل</strong>.<br/>
+              ٣) لأنه واحد لواحد وشامل معاً ← يُسمّى <strong>اقتران تناظر</strong>.
+            </div>
+          </div>
+
+          <!-- الرسم الثاني -->
+          <div class="diagram-box">
+            <div class="diagram-caption">الاقتران الثاني: ق : أ ← ب</div>
+            <div class="diagram-svg-wrap" id="ex3-svg-2"></div>
+            <div class="diagram-analysis status-no">
+              <strong>الحل خطوة بخطوة:</strong><br/>
+              ١) نلاحظ أن <span class="math">ق(٢) = ق(٣) = -٢</span> مع أن <span class="math">٢ ≠ ٣</span> ← <strong>ليس واحداً لواحد</strong>.<br/>
+              ٢) المدى = <span class="math">{<span class="frac"><span class="num">١</span><span class="den">٢</span></span> ، -٢} ≠ ب</span> لأن العنصر <span class="math">٤ ∉ المدى</span> ← <strong>ليس شاملاً</strong>.<br/>
+              ٣) إذن الاقتران <strong>ليس اقتران تناظر</strong>.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================================
+         القسم الثالث: التمارين التفاعلية (١٥ سؤالاً)
+         ======================================================================= -->
+    <section class="section-block" id="section-exercises">
+      <div class="section-header">
+        <div class="section-title-group">
+          <div class="section-icon icon-amber" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 20h9"/>
+              <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+            </svg>
+          </div>
+          <div>
+            <h2 class="section-title">القسم الثالث: التمارين التفاعلية</h2>
+            <p class="section-subtitle">١٥ سؤالاً متنوعاً (٧ اختيار من متعدد • ٤ صح أو خطأ • ٤ سحب وإفلات) — اضغط على أي سؤال أو زر السماعة للاستماع إليه</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- بطاقة النتيجة النهائية (تظهر بعد التصحيح أو عند وجود حل محفوظ مسبقاً) -->
+      <div class="result-card" id="resultCard" aria-live="polite">
+        <div class="lock-banner" id="lockBanner" style="display: none;">
+          تم تسليم حلك مسبقاً ولا يمكن إعادة الإرسال. يمكنك مراجعة نتيجتك وإجاباتك أدناه.
+        </div>
+        <div class="result-score-circle">
+          <div class="result-score-big" id="resScoreNum">٠ / ١٥</div>
+          <div class="result-score-sub" id="resPercent">٠٪</div>
+        </div>
+        <div class="result-student-name" id="resStudentName">اسم الطالب</div>
+        <div style="color: var(--text-muted); font-size: 0.94rem;" id="resSectionTime"></div>
+
+        <div class="result-metrics">
+          <div class="metric-box">
+            <div class="metric-label">الإجابات الصحيحة</div>
+            <div class="metric-val" style="color: var(--emerald);" id="resCorrectCount">٠</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-label">الإجابات الخاطئة</div>
+            <div class="metric-val" style="color: var(--danger);" id="resWrongCount">٠</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-label">التقدير العام</div>
+            <div class="metric-val" id="resGradeLabel">—</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- شريط التحكم بنمط العرض ومفتاح الألوان -->
+      <div class="quiz-controls-top">
+        <div class="mode-switcher" role="group" aria-label="طريقة عرض الأسئلة">
+          <button type="button" class="mode-btn active" id="modeAllBtn">عرض جميع الأسئلة</button>
+          <button type="button" class="mode-btn" id="modeStepBtn">سؤالاً بسؤال</button>
+        </div>
+
+        <div class="quiz-legend">
+          <span><span class="legend-dot" style="background: #FFFFFF; border: 1.5px solid #94A3B8;"></span>غير مجاب</span>
+          <span><span class="legend-dot" style="background: #EDF4FA; border: 1.5px solid #1E4E79;"></span>تمت الإجابة</span>
+          <span><span class="legend-dot" style="background: #1E4E79;"></span>الحالي</span>
+        </div>
+      </div>
+
+      <!-- خريطة أرقام الأسئلة للتنقل السريع وتعديل الإجابات -->
+      <div class="q-map" id="questionMap" aria-label="التنقل بين الأسئلة"></div>
+
+      <!-- حاوية الأسئلة -->
+      <div id="questionsContainer"></div>
+
+      <!-- أزرار السابق / التالي في وضع سؤال بسؤال -->
+      <div class="step-nav-bar" id="stepNavBar" style="display: none;">
+        <button type="button" class="btn btn-outline" id="prevQuestionBtn">
+          → السؤال السابق
+        </button>
+        <div style="font-weight: 800; color: var(--primary);" id="stepIndicator">السؤال ١ من ١٥</div>
+        <button type="button" class="btn btn-primary" id="nextQuestionBtn">
+          السؤال التالي ←
+        </button>
+      </div>
+
+      <!-- منطقة التصحيح النهائي -->
+      <div class="submit-zone" id="submitZone">
+        <h3>هل راجعت جميع إجاباتك؟</h3>
+        <p>يمكنك تعديل إجابة أي سؤال قبل الضغط على زر التصحيح. يُسمح بتسليم حل واحد فقط لكل طالب.</p>
+        <button type="button" class="btn btn-emerald btn-submit-main" id="gradeBtn">
+          تصحيح الإجابات
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- التذييل -->
+  <footer class="page-footer">
+    <div class="footer-inner">
+      <div>
+        <strong>مدرسة مادما الثانوية المختلطة (أ)</strong> • رياضيات الصف التاسع الأساسي • إعداد المعلم: محمود عبد الله قط
+      </div>
+      <button type="button" class="btn btn-outline btn-sm" id="footerTeacherBtn">
+        لوحة المعلم (سجل النتائج)
+      </button>
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       النوافذ المنبثقة (بدون أي استخدام لـ alert أو confirm)
+       ========================================================================= -->
+
+  <!-- ١. نافذة التنبيه بوجود أسئلة غير مجاب عنها -->
+  <div class="modal-backdrop" id="unansweredModal" role="dialog" aria-modal="true" aria-labelledby="unansweredTitle">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h3 class="modal-title" id="unansweredTitle">تنبيه قبل التصحيح</h3>
+        <button type="button" class="modal-close" data-close="unansweredModal" aria-label="إغلاق">×</button>
+      </div>
+      <p id="unansweredMessage" style="color: var(--text-secondary); margin-bottom: 14px;"></p>
+      <div id="unansweredList" style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px;"></div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-outline" data-close="unansweredModal">العودة لإكمال الأسئلة</button>
+        <button type="button" class="btn btn-amber" id="proceedSubmitAnywayBtn">متابعة للتصحيح الآن</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ٢. نافذة إدخال اسم الطالب والشعبة -->
+  <div class="modal-backdrop" id="studentInfoModal" role="dialog" aria-modal="true" aria-labelledby="studentInfoTitle">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h3 class="modal-title" id="studentInfoTitle">بيانات الطالب لتسليم الحل</h3>
+        <button type="button" class="modal-close" data-close="studentInfoModal" aria-label="إغلاق">×</button>
+      </div>
+      <p style="font-size: 0.92rem; color: var(--text-secondary); margin-bottom: 16px;">
+        أدخل اسمك الكامل لحفظ نتيجتك في سجل المعلم. يرجى الانتباه إلى أنه يُسمح بإرسال محاولة واحدة فقط.
+      </p>
+      <div class="form-group">
+        <label class="form-label" for="studentNameInput">اسم الطالب الكامل <span style="color: var(--danger);">*</span></label>
+        <input type="text" id="studentNameInput" class="form-input" placeholder="مثال: أحمد محمد سعيد نصار" autocomplete="name" />
+        <div class="form-error" id="studentNameError"></div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="studentSectionSelect">الشعبة (اختياري)</label>
+        <select id="studentSectionSelect" class="form-select">
+          <option value="غير محدد">اختر الشعبة...</option>
+          <option value="أ">التاسع (أ)</option>
+          <option value="ب">التاسع (ب)</option>
+          <option value="ج">التاسع (ج)</option>
+          <option value="د">التاسع (د)</option>
+        </select>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-outline" data-close="studentInfoModal">إلغاء</button>
+        <button type="button" class="btn btn-emerald" id="confirmGradeSubmitBtn">تأكيد وإظهار النتيجة</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ٣. نافذة رمز المرور للوحة المعلم -->
+  <div class="modal-backdrop" id="teacherPinModal" role="dialog" aria-modal="true" aria-labelledby="teacherPinTitle">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h3 class="modal-title" id="teacherPinTitle">الدخول إلى لوحة المعلم</h3>
+        <button type="button" class="modal-close" data-close="teacherPinModal" aria-label="إغلاق">×</button>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="teacherPinInput">أدخل رمز مرور المعلم</label>
+        <input type="password" id="teacherPinInput" class="form-input" placeholder="••••" inputmode="numeric" />
+        <div class="form-error" id="teacherPinError">رمز المرور غير صحيح، يرجى المحاولة مرة أخرى.</div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-outline" data-close="teacherPinModal">إلغاء</button>
+        <button type="button" class="btn btn-primary" id="verifyPinBtn">دخول</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ٤. نافذة لوحة المعلم (سجل النتائج والإحصائيات) -->
+  <div class="modal-backdrop" id="teacherDashModal" role="dialog" aria-modal="true" aria-labelledby="teacherDashTitle">
+    <div class="modal-box modal-wide">
+      <div class="modal-head">
+        <h3 class="modal-title" id="teacherDashTitle">لوحة المعلم — سجل نتائج الطلاب</h3>
+        <button type="button" class="modal-close" data-close="teacherDashModal" aria-label="إغلاق">×</button>
+      </div>
+
+      <div class="teacher-toolbar">
+        <div class="db-status-pill" id="dbStatusPill">
+          <span class="db-dot"></span>
+          <span id="dbStatusText">جاري التحقق من قاعدة البيانات...</span>
+        </div>
+
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <button type="button" class="btn btn-outline btn-sm" id="refreshResultsBtn">تحديث البيانات</button>
+          <button type="button" class="btn btn-emerald btn-sm" id="exportCsvBtn">تصدير إلى Excel (CSV)</button>
+        </div>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-title">عدد الطلاب المشاركين</div>
+          <div class="kpi-value" id="kpiTotal">٠</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-title">متوسط العلامات</div>
+          <div class="kpi-value" id="kpiAvg">٠ / ١٥</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-title">أعلى علامة</div>
+          <div class="kpi-value" style="color: var(--emerald);" id="kpiMax">٠</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-title">أقل علامة</div>
+          <div class="kpi-value" style="color: var(--amber);" id="kpiMin">٠</div>
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-bottom: 12px;">
+        <input type="text" id="teacherSearchInput" class="form-input" placeholder="ابحث باسم الطالب أو الشعبة..." />
+      </div>
+
+      <div class="table-wrap">
+        <table class="results-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>اسم الطالب</th>
+              <th>الشعبة</th>
+              <th>العلامة (من ١٥)</th>
+              <th>النسبة المئوية</th>
+              <th>وقت التسليم</th>
+              <th>التفاصيل</th>
+            </tr>
+          </thead>
+          <tbody id="teacherTableBody">
+            <tr>
+              <td colspan="7" style="text-align: center; padding: 24px; color: var(--text-muted);">لا توجد استجابات مسجلة حتى الآن.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ٥. نافذة تفاصيل إجابات طالب محدد داخل لوحة المعلم -->
+  <div class="modal-backdrop" id="studentDetailModal" role="dialog" aria-modal="true" aria-labelledby="studentDetailTitle">
+    <div class="modal-box modal-wide">
+      <div class="modal-head">
+        <h3 class="modal-title" id="studentDetailTitle">تفاصيل إجابات الطالب</h3>
+        <button type="button" class="modal-close" data-close="studentDetailModal" aria-label="إغلاق">×</button>
+      </div>
+      <div id="studentDetailHeader" style="background: var(--bg-blue-soft); padding: 14px 16px; border-radius: var(--radius-sm); font-weight: 700; color: var(--primary-dark);"></div>
+      <div class="detail-list" id="studentDetailBody"></div>
+    </div>
+  </div>
+
+  <!-- حاوية الإشعارات -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <!-- =========================================================================
+       البرمجة التفاعلية + الرسومات الرياضية SVG + النطق الصوتي + قاعدة البيانات
+       ========================================================================= -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, collection, addDoc, getDocs, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    /* ========================================================================
+       ١. أدوات مساعدة للأرقام العربية والكسور والرسومات الهندسية الدقيقة (SVG)
+       ======================================================================== */
+    const AR_DIGITS = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+
+    /** تحويل الأرقام الإنجليزية إلى أرقام عربية مشرقية */
+    function toArNum(val) {
+      return String(val).replace(/\d/g, d => AR_DIGITS[Number(d)]);
+    }
+
+    /** إنشاء كسر رياضي عمودي بسط فوق خط كسر فوق مقام */
+    function fracHTML(num, den) {
+      return `<span class="frac"><span class="num">${num}</span><span class="den">${den}</span></span>`;
+    }
+
+    /** إظهار إشعار لطيف بدون alert */
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type === 'success' ? 'toast-success' : type === 'warn' ? 'toast-warn' : type === 'error' ? 'toast-error' : ''}`;
+      toast.textContent = message;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(8px)';
+        toast.style.transition = 'all 0.25s ease';
+        setTimeout(() => toast.remove(), 260);
+      }, 3400);
+    }
+
+    /**
+     * مولد المخطط السهمي الدقيق رياضياً وهندسياً بصيغة SVG
+     * - المجال (اليمين) باللون الأزرق الأكاديمي #1E4E79
+     * - المجال المقابل (اليسار) باللون الأخضر الزمردي #1F7A63
+     * - الأسهم تُحسب هندسياً بمتجهات وحدة دقيقة من حافة نقطة العنصر إلى حافة نقطة صورته
+     * - يدعم الكسور العمودية داخل الـ SVG بدقة تامة
+     */
+    function createArrowDiagramSVG(config) {
+      const {
+        uid,
+        domainLabel,
+        codomainLabel,
+        domainItems,    // [{ label, frac?: [num, den], highlightError?: boolean }]
+        codomainItems,  // [{ label, frac?: [num, den] }]
+        arrows          // [{ from: idx, to: idx, color?: string }]
+      } = config;
+
+      const W = 340, H = 236;
+      const rightOvalX = 252, leftOvalX = 88, ovalY = 132, rx = 58, ry = 88;
+      const rightDotX = 216, leftDotX = 124;
+      const rightTextX = 264, leftTextX = 76;
+
+      // حساب إحداثيات Y بتوزيع متساوٍ ومثالي هندسياً داخل كل شكل بيضاوي
+      const getYs = (count) => {
+        if (count === 3) return [80, 132, 184];
+        if (count === 4) return [72, 112, 152, 192];
+        const top = 74, bottom = 190;
+        return Array.from({ length: count }, (_, i) =>
+          count === 1 ? 132 : top + ((bottom - top) * i) / (count - 1)
+        );
+      };
+
+      const dYs = getYs(domainItems.length);
+      const cYs = getYs(codomainItems.length);
+
+      // تجميع ألوان رؤوس الأسهم الفريدة
+      const uniqueColors = [...new Set(arrows.map(a => a.color || '#1E4E79'))];
+      const markersSVG = uniqueColors.map((col, idx) => {
+        const mId = `arrow-${uid}-${idx}`;
+        return `
+          <marker id="${mId}" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7.5" markerHeight="7.5" orient="auto-start-reverse">
+            <path d="M 0 1 L 10 5 L 0 9 z" fill="${col}" />
+          </marker>
+        `;
+      }).join('');
+
+      const getMarkerId = (col) => `arrow-${uid}-${uniqueColors.indexOf(col || '#1E4E79')}`;
+
+      // رسم عناصر نصية أو كسور عمودية بدقة
+      const renderItemLabel = (item, x, y, color) => {
+        if (item.frac) {
+          const [n, d] = item.frac;
+          return `
+            <g>
+              <text x="${x}" y="${y - 6}" text-anchor="middle" font-size="14" font-weight="800" fill="${color}" font-family="Segoe UI, Tahoma, Arial, sans-serif">${n}</text>
+              <line x1="${x - 10}" y1="${y - 1}" x2="${x + 10}" y2="${y - 1}" stroke="${color}" stroke-width="2" stroke-linecap="round"/>
+              <text x="${x}" y="${y + 14}" text-anchor="middle" font-size="14" font-weight="800" fill="${color}" font-family="Segoe UI, Tahoma, Arial, sans-serif">${d}</text>
+            </g>
+          `;
+        }
+        return `<text x="${x}" y="${y + 6}" text-anchor="middle" font-size="18" font-weight="800" fill="${color}" font-family="Segoe UI, Tahoma, Arial, sans-serif">${item.label}</text>`;
+      };
+
+      // رسم نقاط وعناصر المجال (اليمين)
+      const domainNodesSVG = domainItems.map((item, i) => {
+        const y = dYs[i];
+        const ring = item.highlightError
+          ? `<circle cx="${rightDotX}" cy="${y}" r="9" fill="none" stroke="#C53030" stroke-width="2" stroke-dasharray="3 2"/>`
+          : '';
+        return `
+          ${ring}
+          <circle cx="${rightDotX}" cy="${y}" r="4.5" fill="${item.highlightError ? '#C53030' : '#1E4E79'}" />
+          ${renderItemLabel(item, rightTextX, y, item.highlightError ? '#C53030' : '#153959')}
+        `;
+      }).join('');
+
+      // رسم نقاط وعناصر المجال المقابل (اليسار)
+      const codomainNodesSVG = codomainItems.map((item, i) => {
+        const y = cYs[i];
+        return `
+          <circle cx="${leftDotX}" cy="${y}" r="4.5" fill="#1F7A63" />
+          ${renderItemLabel(item, leftTextX, y, '#165B4A')}
+        `;
+      }).join('');
+
+      // رسم الأسهم الدقيقة بمتجهات هندسية
+      const arrowsSVG = arrows.map(a => {
+        const x1 = rightDotX, y1 = dYs[a.from];
+        const x2 = leftDotX, y2 = cYs[a.to];
+        const dx = x2 - x1;
+        const dy = y2 - y1;
+        const dist = Math.hypot(dx, dy);
+        const startOffset = 7;
+        const endOffset = 9;
+        const sx = (x1 + (dx / dist) * startOffset).toFixed(2);
+        const sy = (y1 + (dy / dist) * startOffset).toFixed(2);
+        const ex = (x2 - (dx / dist) * endOffset).toFixed(2);
+        const ey = (y2 - (dy / dist) * endOffset).toFixed(2);
+        const col = a.color || '#1E4E79';
+        return `<line x1="${sx}" y1="${sy}" x2="${ex}" y2="${ey}" stroke="${col}" stroke-width="2.4" stroke-linecap="round" marker-end="url(#${getMarkerId(col)})" />`;
+      }).join('');
+
+      return `
+        <svg viewBox="0 0 ${W} ${H}" role="img" aria-label="مخطط سهمي من المجموعة ${domainLabel} إلى المجموعة ${codomainLabel}">
+          <defs>${markersSVG}</defs>
+          <!-- عنوان المجموعة الأولى (المجال) -->
+          <text x="${rightOvalX}" y="28" text-anchor="middle" font-size="21" font-weight="900" fill="#1E4E79" font-family="Segoe UI, Tahoma, Arial, sans-serif">${domainLabel}</text>
+          <!-- عنوان المجموعة الثانية (المجال المقابل) -->
+          <text x="${leftOvalX}" y="28" text-anchor="middle" font-size="21" font-weight="900" fill="#1F7A63" font-family="Segoe UI, Tahoma, Arial, sans-serif">${codomainLabel}</text>
+
+          <!-- الشكل البيضاوي للمجال -->
+          <ellipse cx="${rightOvalX}" cy="${ovalY}" rx="${rx}" ry="${ry}" fill="#EDF4FA" stroke="#1E4E79" stroke-width="2.5" />
+          <!-- الشكل البيضاوي للمجال المقابل -->
+          <ellipse cx="${leftOvalX}" cy="${ovalY}" rx="${rx}" ry="${ry}" fill="#ECF7F3" stroke="#1F7A63" stroke-width="2.5" />
+
+          <!-- الأسهم -->
+          ${arrowsSVG}
+          <!-- العناصر والنقاط -->
+          ${domainNodesSVG}
+          ${codomainNodesSVG}
+        </svg>
+      `;
+    }
+
+    /* ========================================================================
+       ٢. رسم مخططات القسم الثاني (الأمثلة المحلولة) بدقة ١٠٠٪
+       ======================================================================== */
+    function renderExampleDiagrams() {
+      // مثال ١ - الشكل أ: اقتران
+      document.getElementById('ex1-svg-a').innerHTML = createArrowDiagramSVG({
+        uid: 'ex1a',
+        domainLabel: 'س',
+        codomainLabel: 'ص',
+        domainItems: [{ label: '١' }, { label: '٢' }, { label: '٣' }],
+        codomainItems: [{ label: '٣' }, { label: '٥' }, { label: '٧' }, { label: '٨' }],
+        arrows: [
+          { from: 0, to: 0, color: '#1F7A63' },
+          { from: 1, to: 1, color: '#1F7A63' },
+          { from: 2, to: 2, color: '#1F7A63' }
+        ]
+      });
+
+      // مثال ١ - الشكل ب: ليست اقتراناً (العنصر ٣ بلا صورة)
+      document.getElementById('ex1-svg-b').innerHTML = createArrowDiagramSVG({
+        uid: 'ex1b',
+        domainLabel: 'س',
+        codomainLabel: 'ص',
+        domainItems: [{ label: '١' }, { label: '٢' }, { label: '٣', highlightError: true }],
+        codomainItems: [{ label: '٣' }, { label: '٥' }, { label: '٧' }, { label: '٨' }],
+        arrows: [
+          { from: 0, to: 0, color: '#1E4E79' },
+          { from: 1, to: 1, color: '#1E4E79' }
+        ]
+      });
+
+      // مثال ١ - الشكل ج: ليست اقتراناً (العنصر ٢ له صورتان ٥ و ٨)
+      document.getElementById('ex1-svg-c').innerHTML = createArrowDiagramSVG({
+        uid: 'ex1c',
+        domainLabel: 'س',
+        codomainLabel: 'ص',
+        domainItems: [{ label: '١' }, { label: '٢', highlightError: true }, { label: '٣' }],
+        codomainItems: [{ label: '٣' }, { label: '٥' }, { label: '٧' }, { label: '٨' }],
+        arrows: [
+          { from: 0, to: 0, color: '#1E4E79' },
+          { from: 1, to: 1, color: '#C53030' },
+          { from: 1, to: 3, color: '#C53030' },
+          { from: 2, to: 2, color: '#1E4E79' }
+        ]
+      });
+
+      // مثال ٣ - الرسم الأول: اقتران تناظر
+      document.getElementById('ex3-svg-1').innerHTML = createArrowDiagramSVG({
+        uid: 'ex3a',
+        domainLabel: 'أ',
+        codomainLabel: 'ب',
+        domainItems: [{ label: '١' }, { label: '٢' }, { label: '٣' }, { label: '٤' }],
+        codomainItems: [{ label: '٣' }, { label: '٤' }, { label: '٧' }, { label: '٩' }],
+        arrows: [
+          { from: 0, to: 0, color: '#1F7A63' },
+          { from: 1, to: 1, color: '#1F7A63' },
+          { from: 2, to: 2, color: '#1F7A63' },
+          { from: 3, to: 3, color: '#1F7A63' }
+        ]
+      });
+
+      // مثال ٣ - الرسم الثاني: ليس واحداً لواحد وليس شاملاً
+      document.getElementById('ex3-svg-2').innerHTML = createArrowDiagramSVG({
+        uid: 'ex3b',
+        domainLabel: 'أ',
+        codomainLabel: 'ب',
+        domainItems: [{ label: '١' }, { label: '٢' }, { label: '٣' }],
+        codomainItems: [{ frac: ['١', '٢'] }, { label: '-٢' }, { label: '٤' }],
+        arrows: [
+          { from: 0, to: 0, color: '#1E4E79' },
+          { from: 1, to: 1, color: '#B7791F' },
+          { from: 2, to: 1, color: '#B7791F' }
+        ]
+      });
+    }
+
+    /* ========================================================================
+       ٣. بيانات الأسئلة التفاعلية الـ ١٥ (مباشرة، دقيقة، مع نص النطق الصوتي)
+       ======================================================================== */
+    const QUESTIONS = [
+      // --------- المجموعة أ: الاختيار من متعدد (٧ أسئلة) ---------
+      {
+        id: 1,
+        type: 'mcq',
+        typeLabel: 'اختيار من متعدد',
+        difficulty: 'سهل',
+        diffClass: 'badge-easy',
+        textHTML: 'تأمل المخطط السهمي للعلاقة من المجموعة <span class="math">أ</span> إلى المجموعة <span class="math">ب</span>. أي العبارات الآتية صحيحة؟',
+        speechText: 'السؤال الأول: تأمل المخطط السهمي للعلاقة من المجموعة ألف إلى المجموعة باء، حيث ترتبط واحد بأربعة، واثنان بخمسة، وثلاثة بستة، والعنصر سبعة غير مرتبط. أي العبارات الآتية صحيحة؟',
+        diagramConfig: {
+          uid: 'q1svg',
+          domainLabel: 'أ',
+          codomainLabel: 'ب',
+          domainItems: [{ label: '١' }, { label: '٢' }, { label: '٣' }],
+          codomainItems: [{ label: '٤' }, { label: '٥' }, { label: '٦' }, { label: '٧' }],
+          arrows: [
+            { from: 0, to: 0, color: '#1E4E79' },
+            { from: 1, to: 1, color: '#1E4E79' },
+            { from: 2, to: 2, color: '#1E4E79' }
+          ]
+        },
+        singleColOptions: true,
+        options: [
+          { key: 'أ', html: 'العلاقة ليست اقتراناً لأن العنصر ٧ غير مرتبط.' },
+          { key: 'ب', html: 'العلاقة اقتران، ومداه يساوي <span class="math">{٤، ٥، ٦}</span>.' },
+          { key: 'ج', html: 'العلاقة اقتران، ومداه يساوي <span class="math">{٤، ٥، ٦، ٧}</span>.' },
+          { key: 'د', html: 'العلاقة اقتران، ومجاله المقابل يساوي <span class="math">{١، ٢، ٣}</span>.' }
+        ],
+        correctKey: 'ب',
+        explanation: 'كل عنصر في المجموعة أ ارتبط بعنصر واحد فقط في المجموعة ب، لذا فالعلاقة اقتران، ومداه هو مجموعة الصور فقط أي {٤، ٥، ٦}.'
+      },
+      {
+        id: 2,
+        type: 'mcq',
+        typeLabel: 'اختيار من متعدد',
+        difficulty: 'سهل',
+        diffClass: 'badge-easy',
+        textHTML: 'إذا كان الاقتران <span class="math">ق = {(٢، ٥)، (٤، ١)، (٦، ٥)، (٨، ٣)}</span>، فما قيمة <span class="math">ق(٤) + ق(٦)</span>؟',
+        speechText: 'السؤال الثاني: إذا كان الاقتران قاف يساوي مجموعة الأزواج المرتبة اثنان وخمسة، وأربعة وواحد، وستة وخمسة، وثمانية وثلاثة، فما قيمة قاف للأربعة زائد قاف للستة؟',
+        options: [
+          { key: 'أ', html: '<span class="math">٦</span>' },
+          { key: 'ب', html: '<span class="math">٨</span>' },
+          { key: 'ج', html: '<span class="math">١٠</span>' },
+          { key: 'د', html: '<span class="math">٤</span>' }
+        ],
+        correctKey: 'أ',
+        explanation: 'من الأزواج المرتبة نجد أن ق(٤) = ١ و ق(٦) = ٥، إذن ق(٤) + ق(٦) = ١ + ٥ = ٦.'
+      },
+      {
+        id: 3,
+        type: 'mcq',
+        typeLabel: 'اختيار من متعدد',
+        difficulty: 'متوسط',
+        diffClass: 'badge-medium',
+        textHTML: `إذا كان الاقتران <span class="math">ق : ح ← ح</span>، بحيث <span class="math">ق(س) = س<sup>٢</sup></span>، فما قيمة <span class="math">ق(${fracHTML('١', '٣')})</span>؟`,
+        speechText: 'السؤال الثالث: إذا كان الاقتران قاف من حاء إلى حاء، بحيث قاف للسين يساوي سين تربيع، فما قيمة قاف للثلث؟',
+        options: [
+          { key: 'أ', html: `<span class="math">${fracHTML('٢', '٣')}</span>` },
+          { key: 'ب', html: `<span class="math">${fracHTML('١', '٦')}</span>` },
+          { key: 'ج', html: `<span class="math">${fracHTML('١', '٩')}</span>` },
+          { key: 'د', html: `<span class="math">${fracHTML('٢', '٩')}</span>` }
+        ],
+        correctKey: 'ج',
+        explanation: 'بالتعويض في قاعدة الاقتران: ق(١/٣) = (١/٣)² = ١/٣ × ١/٣ = ١/٩.'
+      },
+      {
+        id: 4,
+        type: 'mcq',
+        typeLabel: 'اختيار من متعدد',
+        difficulty: 'متوسط',
+        diffClass: 'badge-medium',
+        textHTML: 'إذا كان الاقتران <span class="math">ق : ص ← ص</span>، بحيث <span class="math">ق(س) = ٣س - ٤</span>، وكان الزوج المرتب <span class="math">(س ، ١١)</span> يحقق قاعدة الاقتران، فما قيمة <span class="math">س</span>؟',
+        speechText: 'السؤال الرابع: إذا كان الاقتران قاف من صاد إلى صاد، بحيث قاف للسين يساوي ثلاثة سين ناقص أربعة، وكان الزوج المرتب سين وأحد عشر يحقق قاعدة الاقتران، فما قيمة سين؟',
+        options: [
+          { key: 'أ', html: '<span class="math">٣</span>' },
+          { key: 'ب', html: '<span class="math">٧</span>' },
+          { key: 'ج', html: '<span class="math">١٥</span>' },
+          { key: 'د', html: '<span class="math">٥</span>' }
+        ],
+        correctKey: 'د',
+        explanation: 'ق(س) = ١١ ← ٣س - ٤ = ١١ ← ٣س = ١٥ ← س = ٥.'
+      },
+      {
+        id: 5,
+        type: 'mcq',
+        typeLabel: 'اختيار من متعدد',
+        difficulty: 'متوسط',
+        diffClass: 'badge-medium',
+        textHTML: 'إذا كان الاقتران <span class="math">ق</span> معرفاً بحيث <span class="math">ق(س) = ٢س</span> عندما يكون <span class="math">س</span> عدداً زوجياً، و <span class="math">ق(س) = س + ٣</span> عندما يكون <span class="math">س</span> عدداً فردياً، فما قيمة <span class="math">ق(٤) - ق(٣)</span>؟',
+        speechText: 'السؤال الخامس: إذا كان الاقتران قاف معرفاً بحيث قاف للسين يساوي اثنين سين عندما يكون سين عدداً زوجياً، وقاف للسين يساوي سين زائد ثلاثة عندما يكون سين عدداً فردياً، فما قيمة قاف للأربعة ناقص قاف للثلاثة؟',
+        options: [
+          { key: 'أ', html: '<span class="math">٢</span>' },
+          { key: 'ب', html: '<span class="math">١</span>' },
+          { key: 'ج', html: '<span class="math">٤</span>' },
+          { key: 'د', html: '<span class="math">١٤</span>' }
+        ],
+        correctKey: 'أ',
+        explanation: 'العدد ٤ زوجي ← ق(٤) = ٢ × ٤ = ٨. والعدد ٣ فردي ← ق(٣) = ٣ + ٣ = ٦. إذن ق(٤) - ق(٣) = ٨ - ٦ = ٢.'
+      },
+      {
+        id: 6,
+        type: 'mcq',
+        typeLabel: 'اختيار من متعدد',
+        difficulty: 'صعب',
+        diffClass: 'badge-hard',
+        textHTML: 'يمثل المخطط السهمي المجاور الاقتران <span class="math">ق : أ ← ب</span>. أي مما يأتي يصف الاقتران <span class="math">ق</span> وصفاً دقيقاً؟',
+        speechText: 'السؤال السادس: يمثل المخطط السهمي المجاور الاقتران قاف من ألف إلى باء، حيث ترتبط واحد بنصف، واثنان بسالب ثلاثة، وثلاثة بسالب ثلاثة، والعنصر خمسة غير مرتبط. أي مما يأتي يصف الاقتران قاف وصفاً دقيقاً؟',
+        diagramConfig: {
+          uid: 'q6svg',
+          domainLabel: 'أ',
+          codomainLabel: 'ب',
+          domainItems: [{ label: '١' }, { label: '٢' }, { label: '٣' }],
+          codomainItems: [{ frac: ['١', '٢'] }, { label: '-٣' }, { label: '٥' }],
+          arrows: [
+            { from: 0, to: 0, color: '#1E4E79' },
+            { from: 1, to: 1, color: '#B7791F' },
+            { from: 2, to: 1, color: '#B7791F' }
+          ]
+        },
+        singleColOptions: true,
+        options: [
+          { key: 'أ', html: 'اقتران تناظر.' },
+          { key: 'ب', html: 'اقتران واحد لواحد فقط وليس شاملاً.' },
+          { key: 'ج', html: 'اقتران شامل فقط وليس واحداً لواحد.' },
+          { key: 'د', html: 'ليس واحداً لواحد وليس شاملاً.' }
+        ],
+        correctKey: 'د',
+        explanation: 'لأن ق(٢) = ق(٣) = -٣ فالاقتران ليس واحداً لواحد، ولأن العنصر ٥ لا ينتمي إلى المدى فالاقتران ليس شاملاً.'
+      },
+      {
+        id: 7,
+        type: 'mcq',
+        typeLabel: 'اختيار من متعدد',
+        difficulty: 'صعب',
+        diffClass: 'badge-hard',
+        textHTML: 'ينتج مصنع يومياً <span class="math">(س)</span> جهازاً، سعر الجهاز الواحد <span class="math">٥٠٠</span> دينار، ويدفع المصنع مصاريف يومية ثابتة مقدارها <span class="math">١٥٠٠٠</span> دينار. ما قاعدة الاقتران <span class="math">ق(س)</span> التي تمثل أرباح المصنع اليومية، وما أرباحه عند إنتاج <span class="math">١٠٠</span> جهاز؟',
+        speechText: 'السؤال السابع: ينتج مصنع يومياً سين جهازاً، سعر الجهاز الواحد خمسمئة دينار، ويدفع المصنع مصاريف يومية ثابتة مقدارها خمسة عشر ألف دينار. ما قاعدة الاقتران قاف للسين التي تمثل أرباح المصنع اليومية، وما أرباحه عند إنتاج مئة جهاز؟',
+        singleColOptions: true,
+        options: [
+          { key: 'أ', html: '<span class="math">ق(س) = ٥٠٠س + ١٥٠٠٠</span> ، الأرباح = <span class="math">٦٥٠٠٠</span> دينار.' },
+          { key: 'ب', html: '<span class="math">ق(س) = ٥٠٠س - ١٥٠٠٠</span> ، الأرباح = <span class="math">٣٥٠٠٠</span> دينار.' },
+          { key: 'ج', html: '<span class="math">ق(س) = ١٥٠٠٠س - ٥٠٠</span> ، الأرباح = <span class="math">٣٥٠٠٠</span> دينار.' },
+          { key: 'د', html: '<span class="math">ق(س) = ٥٠٠س - ١٥٠٠٠</span> ، الأرباح = <span class="math">٥٠٠٠٠</span> دينار.' }
+        ],
+        correctKey: 'ب',
+        explanation: 'الأرباح = المبيعات - المصاريف الثابتة = ٥٠٠س - ١٥٠٠٠. وعند س = ١٠٠: ق(١٠٠) = ٥٠٠ × ١٠٠ - ١٥٠٠٠ = ٥٠٠٠٠ - ١٥٠٠٠ = ٣٥٠٠٠ دينار.'
+      },
+
+      // --------- المجموعة ب: الصح أو الخطأ (٤ أسئلة) ---------
+      {
+        id: 8,
+        type: 'tf',
+        typeLabel: 'صح أو خطأ',
+        difficulty: 'سهل',
+        diffClass: 'badge-easy',
+        textHTML: 'كل اقتران هو علاقة، ولكن ليس كل علاقة اقتراناً.',
+        speechText: 'السؤال الثامن، صح أم خطأ: كل اقتران هو علاقة، ولكن ليس كل علاقة اقتراناً.',
+        correctValue: true,
+        explanation: 'العبارة صحيحة؛ لأن الاقتران هو علاقة خاصة تشترط ارتباط كل عنصر في المجال بعنصر واحد فقط في المجال المقابل.'
+      },
+      {
+        id: 9,
+        type: 'tf',
+        typeLabel: 'صح أو خطأ',
+        difficulty: 'متوسط',
+        diffClass: 'badge-medium',
+        textHTML: 'إذا كان الاقتران <span class="math">ق : ط ← ط</span> معرفاً بالقاعدة <span class="math">ق(س) = ٢س</span> (حيث <span class="math">ط</span> مجموعة الأعداد الطبيعية)، فإن الاقتران <span class="math">ق</span> يُعد اقتراناً شاملاً.',
+        speechText: 'السؤال التاسع، صح أم خطأ: إذا كان الاقتران قاف من طاء إلى طاء معرفاً بالقاعدة قاف للسين يساوي اثنين سين، حيث طاء مجموعة الأعداد الطبيعية، فإن الاقتران قاف يُعد اقتراناً شاملاً.',
+        correctValue: false,
+        explanation: 'العبارة خاطئة؛ لأن المدى هو مجموعة الأعداد الطبيعية الزوجية {٠، ٢، ٤، ٦، ...} وهو لا يساوي المجال المقابل ط (الأعداد الفردية ليست في المدى).'
+      },
+      {
+        id: 10,
+        type: 'tf',
+        typeLabel: 'صح أو خطأ',
+        difficulty: 'متوسط',
+        diffClass: 'badge-medium',
+        textHTML: 'إذا كان <span class="math">ق : ح ← ح</span>، وكان <span class="math">ق(س) = س<sup>٢</sup></span>، فإن قيم <span class="math">أ</span> التي تجعل <span class="math">ق(أ) = ٢٥</span> هي <span class="math">أ = ٥</span> أو <span class="math">أ = -٥</span>.',
+        speechText: 'السؤال العاشر، صح أم خطأ: إذا كان قاف من حاء إلى حاء، وكان قاف للسين يساوي سين تربيع، فإن قيم ألف التي تجعل قاف للألف يساوي خمسة وعشرين هي ألف يساوي خمسة أو ألف يساوي سالب خمسة.',
+        correctValue: true,
+        explanation: 'العبارة صحيحة؛ لأن أ² = ٢٥ تعطي أ = ٥ أو أ = -٥، وكلاهما ينتمي إلى مجموعة الأعداد الحقيقية ح.'
+      },
+      {
+        id: 11,
+        type: 'tf',
+        typeLabel: 'صح أو خطأ',
+        difficulty: 'صعب',
+        diffClass: 'badge-hard',
+        textHTML: 'الاقتران <span class="math">ق : ح ← ح</span> المعرف بالقاعدة <span class="math">ق(س) = س<sup>٢</sup> + ١</span> هو اقتران تناظر.',
+        speechText: 'السؤال الحادي عشر، صح أم خطأ: الاقتران قاف من حاء إلى حاء المعرف بالقاعدة قاف للسين يساوي سين تربيع زائد واحد هو اقتران تناظر.',
+        correctValue: false,
+        explanation: 'العبارة خاطئة؛ فالاقتران ليس واحداً لواحد لأن ق(٢) = ق(-٢) = ٥، وليس شاملاً لأن جميع الصور أكبر من أو تساوي ١.'
+      },
+
+      // --------- المجموعة ج: السحب والإفلات (٤ أسئلة) ---------
+      {
+        id: 12,
+        type: 'dnd',
+        typeLabel: 'سحب وإفلات',
+        difficulty: 'سهل',
+        diffClass: 'badge-easy',
+        textHTML: 'إذا كانت <span class="math">أ = {٠، ١، ٢}</span> و <span class="math">ب = {٠، ٢، ٤، ٦}</span> وكان الاقتران <span class="math">ق : أ ← ب</span> بحيث <span class="math">ق(س) = ٢س</span>. اسحب كل مجموعة إلى المفهوم المناسب لها:',
+        speechText: 'السؤال الثاني عشر، سحب وإفلات: إذا كانت ألف تساوي المجموعة صفر وواحد واثنان، وباء تساوي المجموعة صفر واثنان وأربعة وستة، وكان الاقتران قاف من ألف إلى باء بحيث قاف للسين يساوي اثنين سين. اسحب كل مجموعة إلى المفهوم المناسب لها: المجال، المجال المقابل، المدى.',
+        slots: [
+          { id: 's1', label: 'المجال', correctItemId: 'i1' },
+          { id: 's2', label: 'المجال المقابل', correctItemId: 'i2' },
+          { id: 's3', label: 'المدى', correctItemId: 'i3' }
+        ],
+        items: [
+          { id: 'i2', label: '{٠، ٢، ٤، ٦}' },
+          { id: 'i3', label: '{٠، ٢، ٤}' },
+          { id: 'i1', label: '{٠، ١، ٢}' }
+        ],
+        explanation: 'المجال هو المجموعة أ = {٠، ١، ٢}، والمجال المقابل هو المجموعة ب = {٠، ٢، ٤، ٦}، والمدى هو مجموعة الصور {ق(٠)، ق(١)، ق(٢)} = {٠، ٢، ٤}.'
+      },
+      {
+        id: 13,
+        type: 'dnd',
+        typeLabel: 'سحب وإفلات',
+        difficulty: 'متوسط',
+        diffClass: 'badge-medium',
+        textHTML: 'إذا كان الاقتران <span class="math">ق : ص ← ص</span> بحيث <span class="math">ق(س) = ٢س + ١</span>. اسحب الصورة الصحيحة لكل عنصر في الخانة المناسبة:',
+        speechText: 'السؤال الثالث عشر، سحب وإفلات: إذا كان الاقتران قاف من صاد إلى صاد بحيث قاف للسين يساوي اثنين سين زائد واحد. اسحب الصورة الصحيحة لكل من قاف لسالب اثنين، وقاف لسالب واحد، وقاف للصفر، وقاف للاثنين.',
+        slots: [
+          { id: 's1', label: 'ق(-٢)', correctItemId: 'i1' },
+          { id: 's2', label: 'ق(-١)', correctItemId: 'i2' },
+          { id: 's3', label: 'ق(٠)', correctItemId: 'i3' },
+          { id: 's4', label: 'ق(٢)', correctItemId: 'i4' }
+        ],
+        items: [
+          { id: 'i3', label: '١' },
+          { id: 'i1', label: '-٣' },
+          { id: 'i4', label: '٥' },
+          { id: 'i2', label: '-١' }
+        ],
+        explanation: 'ق(-٢) = -٤ + ١ = -٣، ق(-١) = -٢ + ١ = -١، ق(٠) = ٠ + ١ = ١، ق(٢) = ٤ + ١ = ٥.'
+      },
+      {
+        id: 14,
+        type: 'dnd',
+        typeLabel: 'سحب وإفلات',
+        difficulty: 'متوسط',
+        diffClass: 'badge-medium',
+        textHTML: 'اسحب كل تعريف إلى المصطلح الرياضي المناسب له:',
+        speechText: 'السؤال الرابع عشر، سحب وإفلات: اسحب كل تعريف إلى المصطلح الرياضي المناسب له: الاقتران، الاقتران الشامل، الاقتران الواحد لواحد، اقتران التناظر.',
+        slots: [
+          { id: 's1', label: 'الاقتران', correctItemId: 'i1' },
+          { id: 's2', label: 'الاقتران الشامل', correctItemId: 'i2' },
+          { id: 's3', label: 'الاقتران الواحد لواحد', correctItemId: 'i3' },
+          { id: 's4', label: 'اقتران التناظر', correctItemId: 'i4' }
+        ],
+        items: [
+          { id: 'i4', label: 'اقتران واحد لواحد وشامل معاً' },
+          { id: 'i2', label: 'المدى يساوي المجال المقابل' },
+          { id: 'i1', label: 'علاقة يرتبط فيها كل عنصر في المجال بعنصر واحد فقط في المجال المقابل' },
+          { id: 'i3', label: 'كل عنصر في المدى صورة لعنصر واحد فقط في المجال' }
+        ],
+        explanation: 'تطابق كل تعريف مع مصطلحه الرياضي الدقيق: الاقتران، الشامل، الواحد لواحد، والتناظر.'
+      },
+      {
+        id: 15,
+        type: 'dnd',
+        typeLabel: 'سحب وإفلات',
+        difficulty: 'صعب',
+        diffClass: 'badge-hard',
+        textHTML: 'إذا كانت <span class="math">أ = {١، ٢، ٣}</span> و <span class="math">ب = {٢، ٤، ٦}</span>، اسحب كل علاقة أو اقتران إلى التصنيف الصحيح:',
+        speechText: 'السؤال الخامس عشر، سحب وإفلات: إذا كانت ألف تساوي المجموعة واحد واثنين وثلاثة، وباء تساوي المجموعة اثنين وأربعة وستة، اسحب كل علاقة أو اقتران إلى التصنيف الصحيح: اقتران تناظر، اقتران ليس واحداً لواحد وليس شاملاً، علاقة ليست اقتراناً.',
+        slots: [
+          { id: 's1', label: 'اقتران تناظر (واحد لواحد وشامل)', correctItemId: 'i1' },
+          { id: 's2', label: 'اقتران ليس واحداً لواحد وليس شاملاً', correctItemId: 'i2' },
+          { id: 's3', label: 'علاقة ليست اقتراناً', correctItemId: 'i3' }
+        ],
+        items: [
+          { id: 'i3', label: 'ع = {(١، ٢)، (١، ٤)، (٢، ٦)} من أ إلى ب' },
+          { id: 'i1', label: 'ق₁ = {(١، ٢)، (٢، ٤)، (٣، ٦)} من أ إلى ب' },
+          { id: 'i2', label: 'ق₂ = {(١، ٢)، (٢، ٢)، (٣، ٢)} من أ إلى ب' }
+        ],
+        explanation: 'ق₁ واحد لواحد وشامل فهو تناظر؛ ق₂ جميع صوره تساوي ٢ فهو ليس واحداً لواحد وليس شاملاً؛ ع ليست اقتراناً لأن العنصر ١ له صورتان (٢ و ٤) والعنصر ٣ بلا صورة.'
+      }
+    ];
+
+    /* ========================================================================
+       ٤. طبقة قاعدة البيانات (Firebase Firestore مع بديل تلقائي عبر localStorage)
+       ======================================================================== */
+    const STORAGE_KEYS = {
+      DEVICE_ID: 'madama_math9_device_id_v1',
+      SUBMITTED_RECORD: 'madama_math9_func_submitted_v1',
+      LOCAL_DB: 'madama_math9_func_db_v1'
+    };
+
+    function safeGetStorage(key) {
+      try { return window.localStorage.getItem(key); } catch { return null; }
+    }
+
+    function safeSetStorage(key, val) {
+      try { window.localStorage.setItem(key, val); } catch { /* ignore in restricted context */ }
+    }
+
+    function getDeviceId() {
+      let id = safeGetStorage(STORAGE_KEYS.DEVICE_ID);
+      if (!id) {
+        id = 'dev_' + Math.random().toString(36).slice(2) + '_' + Date.now().toString(36);
+        safeSetStorage(STORAGE_KEYS.DEVICE_ID, id);
+      }
+      return id;
+    }
+
+    const DB = {
+      mode: 'local', // 'firebase' | 'local'
+      db: null,
+      auth: null,
+      user: null,
+      appId: typeof __app_id !== 'undefined' ? __app_id : 'madama-math9-functions',
+      submissionsCache: [],
+      unsubscribe: null,
+
+      async init() {
+        try {
+          if (typeof __firebase_config !== 'undefined' && __firebase_config) {
+            const firebaseConfig = typeof __firebase_config === 'string'
+              ? JSON.parse(__firebase_config)
+              : __firebase_config;
+
+            if (firebaseConfig && firebaseConfig.apiKey) {
+              const app = initializeApp(firebaseConfig);
+              this.auth = getAuth(app);
+              this.db = getFirestore(app);
+
+              // القاعدة الثالثة: المصادقة قبل أي استعلام Firestore
+              if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                const cred = await signInWithCustomToken(this.auth, __initial_auth_token);
+                this.user = cred.user;
+              } else {
+                const cred = await signInAnonymously(this.auth);
+                this.user = cred.user;
+              }
+
+              if (this.user) {
+                this.mode = 'firebase';
+                this.subscribeRealtime();
+                this.updateStatusBadge();
+                return;
+              }
+            }
+          }
+        } catch (err) {
+          console.warn('تم التحويل إلى وضع التخزين المحلي لعدم توفر إعدادات Firebase:', err);
+        }
+
+        // البديل التلقائي عبر localStorage
+        this.mode = 'local';
+        this.submissionsCache = this.readLocalSubmissions();
+        this.updateStatusBadge();
+      },
+
+      getCollectionRef() {
+        // القاعدة الأولى: المسار الصارم /artifacts/{appId}/public/data/worksheet_submissions
+        return collection(this.db, 'artifacts', this.appId, 'public', 'data', 'worksheet_submissions');
+      },
+
+      subscribeRealtime() {
+        if (this.mode !== 'firebase' || !this.user) return;
+        try {
+          // القاعدة الثانية: استعلام بسيط للمجموعة فقط ثم الفرز في الذاكرة
+          const colRef = this.getCollectionRef();
+          this.unsubscribe = onSnapshot(
+            colRef,
+            (snapshot) => {
+              const list = [];
+              snapshot.forEach(docSnap => {
+                list.push({ id: docSnap.id, ...docSnap.data() });
+              });
+              list.sort((a, b) => (b.submittedAt || '').localeCompare(a.submittedAt || ''));
+              this.submissionsCache = list;
+              if (document.getElementById('teacherDashModal').classList.contains('open')) {
+                renderTeacherDashboard();
+              }
+            },
+            (error) => {
+              console.warn('خطأ في مزامنة البيانات السحابية:', error);
+            }
+          );
+        } catch (e) {
+          console.warn('تعذر الاشتراك في التحديثات اللحظية:', e);
+        }
+      },
+
+      readLocalSubmissions() {
+        try {
+          const raw = safeGetStorage(STORAGE_KEYS.LOCAL_DB);
+          const arr = raw ? JSON.parse(raw) : [];
+          return Array.isArray(arr) ? arr : [];
+        } catch {
+          return [];
+        }
+      },
+
+      saveLocalSubmissions(list) {
+        safeSetStorage(STORAGE_KEYS.LOCAL_DB, JSON.stringify(list));
+      },
+
+      async fetchAll() {
+        if (this.mode === 'firebase' && this.user) {
+          try {
+            const snap = await getDocs(this.getCollectionRef());
+            const list = [];
+            snap.forEach(d => list.push({ id: d.id, ...d.data() }));
+            list.sort((a, b) => (b.submittedAt || '').localeCompare(a.submittedAt || ''));
+            this.submissionsCache = list;
+            return list;
+          } catch (err) {
+            console.warn('فشل جلب البيانات من Firebase، سيتم عرض النسخة المحلية:', err);
+          }
+        }
+        this.submissionsCache = this.readLocalSubmissions();
+        this.submissionsCache.sort((a, b) => (b.submittedAt || '').localeCompare(a.submittedAt || ''));
+        return this.submissionsCache;
+      },
+
+      async isNameDuplicate(studentName) {
+        const normalize = (s) => s.trim().replace(/\s+/g, ' ').toLowerCase();
+        const target = normalize(studentName);
+        const list = await this.fetchAll();
+        return list.some(item => normalize(item.studentName || '') === target);
+      },
+
+      async addSubmission(record) {
+        // حفظ نسخة محلية دائماً كضمان إضافي
+        const localList = this.readLocalSubmissions();
+        const localRecord = { id: 'loc_' + Date.now(), ...record };
+        localList.unshift(localRecord);
+        this.saveLocalSubmissions(localList);
+
+        if (this.mode === 'firebase' && this.user) {
+          try {
+            const docRef = await addDoc(this.getCollectionRef(), record);
+            return { ok: true, id: docRef.id, mode: 'firebase' };
+          } catch (err) {
+            console.warn('تعذر الحفظ في Firestore، تم الحفظ محلياً:', err);
+            this.submissionsCache = localList;
+            return { ok: true, id: localRecord.id, mode: 'local' };
+          }
+        }
+
+        this.submissionsCache = localList;
+        return { ok: true, id: localRecord.id, mode: 'local' };
+      },
+
+      updateStatusBadge() {
+        const pill = document.getElementById('dbStatusPill');
+        const text = document.getElementById('dbStatusText');
+        if (!pill || !text) return;
+        if (this.mode === 'firebase') {
+          pill.classList.remove('local-mode');
+          text.textContent = 'متصل بقاعدة البيانات السحابية (Firebase Firestore)';
+        } else {
+          pill.classList.add('local-mode');
+          text.textContent = 'التخزين المحلي المفعل (بديل تلقائي عند العمل دون خادم سحابي)';
+        }
+      }
+    };
+
+    /* ========================================================================
+       ٥. إدارة حالة الاختبار التفاعلي (الإجابات، وضع العرض، السحب والإفلات، النطق)
+       ======================================================================== */
+    const state = {
+      answers: {},            // qId -> choiceKey (mcq) | boolean (tf) | { slotId: itemId } (dnd)
+      viewMode: 'all',        // 'all' | 'step'
+      currentStepIdx: 0,      // 0..14
+      submitted: false,
+      submittedRecord: null,
+      selectedChip: null,     // { qId, itemId } لدعم النقر للوضع على الهاتف والآيباد
+      hasInteracted: false,
+      speakingQId: null
+    };
+
+    // تهيئة كائن إجابات السحب والإفلات
+    QUESTIONS.forEach(q => {
+      if (q.type === 'dnd') state.answers[q.id] = {};
+    });
+
+    /** التحقق هل السؤال مجاب عنه بالكامل */
+    function isQuestionAnswered(q) {
+      const ans = state.answers[q.id];
+      if (q.type === 'mcq') return typeof ans === 'string' && ans.length > 0;
+      if (q.type === 'tf') return typeof ans === 'boolean';
+      if (q.type === 'dnd') {
+        if (!ans || typeof ans !== 'object') return false;
+        return q.slots.every(slot => Boolean(ans[slot.id]));
+      }
+      return false;
+    }
+
+    /** حساب عدد الأسئلة المجاب عنها */
+    function getAnsweredCount() {
+      return QUESTIONS.filter(isQuestionAnswered).length;
+    }
+
+    /** تحديث شريط التقدم العلوي وخريطة الأسئلة */
+    function updateProgressUI() {
+      const count = getAnsweredCount();
+      const pct = Math.round((count / QUESTIONS.length) * 100);
+      document.getElementById('stickyProgressFill').style.width = pct + '%';
+      document.getElementById('stickyProgressText').textContent = `${toArNum(count)} / ${toArNum(QUESTIONS.length)}`;
+
+      // تحديث خريطة الأسئلة
+      document.querySelectorAll('.q-map-btn').forEach((btn, idx) => {
+        const q = QUESTIONS[idx];
+        btn.classList.remove('answered', 'current', 'review-correct', 'review-wrong');
+
+        if (state.submitted && state.submittedRecord) {
+          const qr = state.submittedRecord.questionResults[idx];
+          btn.classList.add(qr && qr.correct ? 'review-correct' : 'review-wrong');
+        } else if (isQuestionAnswered(q)) {
+          btn.classList.add('answered');
+        }
+
+        if (state.viewMode === 'step' && idx === state.currentStepIdx) {
+          btn.classList.add('current');
+        }
+      });
+    }
+
+    /** تفعيل الشريط العلوي المدمج عند بدء التفاعل */
+    function markInteracted() {
+      if (!state.hasInteracted) {
+        state.hasInteracted = true;
+        updateStickyVisibility();
+      }
+    }
+
+    /* ========================================================================
+       ٦. خاصية النطق الصوتي باللغة العربية (Web Speech API)
+       ======================================================================== */
+    function stopSpeaking() {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+      state.speakingQId = null;
+      document.querySelectorAll('.speak-btn').forEach(b => {
+        b.classList.remove('speaking');
+        b.querySelector('.speak-label').textContent = 'استمع للسؤال';
+      });
+    }
+
+    function speakQuestion(qId) {
+      if (!('speechSynthesis' in window)) {
+        showToast('متصفحك الحالي لا يدعم ميزة النطق الصوتي.', 'warn');
+        return;
+      }
+
+      if (state.speakingQId === qId) {
+        stopSpeaking();
+        return;
+      }
+
+      stopSpeaking();
+      const q = QUESTIONS.find(item => item.id === qId);
+      if (!q) return;
+
+      try {
+        const utterance = new SpeechSynthesisUtterance(q.speechText);
+        utterance.lang = 'ar-SA';
+        utterance.rate = 0.94;
+        utterance.pitch = 1;
+
+        const voices = window.speechSynthesis.getVoices();
+        const arVoice = voices.find(v => v.lang && v.lang.toLowerCase().startsWith('ar'));
+        if (arVoice) utterance.voice = arVoice;
+
+        const btn = document.querySelector(`.speak-btn[data-qid="${qId}"]`);
+        state.speakingQId = qId;
+        if (btn) {
+          btn.classList.add('speaking');
+          btn.querySelector('.speak-label').textContent = 'إيقاف القراءة';
+        }
+
+        utterance.onend = () => stopSpeaking();
+        utterance.onerror = () => stopSpeaking();
+
+        window.speechSynthesis.speak(utterance);
+      } catch {
+        showToast('تعذر تشغيل الصوت في هذا المتصفح.', 'warn');
+        stopSpeaking();
+      }
+    }
+
+    /* ========================================================================
+       ٧. بناء وعرض الأسئلة الـ ١٥ تفاعلياً
+       ======================================================================== */
+    function renderQuestionMap() {
+      const mapEl = document.getElementById('questionMap');
+      mapEl.innerHTML = QUESTIONS.map((q, idx) => `
+        <button type="button" class="q-map-btn" data-idx="${idx}" title="الانتقال إلى السؤال ${toArNum(q.id)}">
+          ${toArNum(q.id)}
+        </button>
+      `).join('');
+
+      mapEl.querySelectorAll('.q-map-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const idx = Number(btn.dataset.idx);
+          state.currentStepIdx = idx;
+          if (state.viewMode === 'step') {
+            applyViewMode();
+          } else {
+            const card = document.getElementById(`q-card-${QUESTIONS[idx].id}`);
+            if (card) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+          updateProgressUI();
+        });
+      });
+    }
+
+    function renderAllQuestions() {
+      const container = document.getElementById('questionsContainer');
+      container.innerHTML = QUESTIONS.map(q => {
+        const diagramHTML = q.diagramConfig
+          ? `<div class="q-diagram-center"><div class="diagram-svg-wrap">${createArrowDiagramSVG(q.diagramConfig)}</div></div>`
+          : '';
+
+        let bodyHTML = '';
+
+        if (q.type === 'mcq') {
+          bodyHTML = `
+            <div class="mcq-options ${q.singleColOptions ? 'single-col' : ''}">
+              ${q.options.map(opt => `
+                <button type="button" class="option-btn" data-qid="${q.id}" data-key="${opt.key}">
+                  <span class="opt-letter">${opt.key}</span>
+                  <span>${opt.html}</span>
+                </button>
+              `).join('')}
+            </div>
+          `;
+        } else if (q.type === 'tf') {
+          bodyHTML = `
+            <div class="tf-options">
+              <button type="button" class="tf-btn" data-qid="${q.id}" data-val="true">
+                <span>✔</span>
+                <span>صح</span>
+              </button>
+              <button type="button" class="tf-btn" data-qid="${q.id}" data-val="false">
+                <span>✘</span>
+                <span>خطأ</span>
+              </button>
+            </div>
+          `;
+        } else if (q.type === 'dnd') {
+          bodyHTML = `
+            <div class="dnd-hint">
+              <span>💡</span>
+              <span>اسحب البطاقة وأفلتها في الخانة المناسبة، أو انقر على البطاقة ثم انقر على الخانة (مثالي للهاتف والآيباد).</span>
+            </div>
+            <div class="dnd-pool" id="dnd-pool-${q.id}"></div>
+            <div class="dnd-slots" id="dnd-slots-${q.id}"></div>
+          `;
+        }
+
+        return `
+          <article class="question-card" id="q-card-${q.id}" data-qid="${q.id}">
+            <div class="q-top-bar">
+              <div class="q-badges">
+                <span class="badge badge-num">السؤال ${toArNum(q.id)}</span>
+                <span class="badge badge-type">${q.typeLabel}</span>
+                <span class="badge ${q.diffClass}">${q.difficulty}</span>
+              </div>
+              <button type="button" class="speak-btn" data-qid="${q.id}" aria-label="استمع للسؤال ${toArNum(q.id)}">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                  <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+                </svg>
+                <span class="speak-label">استمع للسؤال</span>
+              </button>
+            </div>
+
+            <div class="q-text" data-speak-qid="${q.id}" title="انقر لقراءة السؤال صوتياً">
+              ${q.textHTML}
+            </div>
+
+            ${diagramHTML}
+            ${bodyHTML}
+
+            <div class="q-feedback" id="q-fb-${q.id}"></div>
+          </article>
+        `;
+      }).join('');
+
+      // ربط أحداث النطق الصوتي
+      container.querySelectorAll('.speak-btn').forEach(btn => {
+        btn.addEventListener('click', () => speakQuestion(Number(btn.dataset.qid)));
+      });
+      container.querySelectorAll('.q-text').forEach(el => {
+        el.addEventListener('click', () => speakQuestion(Number(el.dataset.speakQid)));
+      });
+
+      // ربط أحداث الاختيار من متعدد
+      container.querySelectorAll('.option-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (state.submitted) return;
+          const qId = Number(btn.dataset.qid);
+          const key = btn.dataset.key;
+          state.answers[qId] = key;
+          markInteracted();
+          syncMCQButtons(qId);
+          updateProgressUI();
+        });
+      });
+
+      // ربط أحداث الصح أو الخطأ
+      container.querySelectorAll('.tf-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (state.submitted) return;
+          const qId = Number(btn.dataset.qid);
+          const val = btn.dataset.val === 'true';
+          state.answers[qId] = val;
+          markInteracted();
+          syncTFButtons(qId);
+          updateProgressUI();
+        });
+      });
+
+      // بناء أسئلة السحب والإفلات
+      QUESTIONS.filter(q => q.type === 'dnd').forEach(q => renderDndQuestion(q));
+
+      applyViewMode();
+      updateProgressUI();
+    }
+
+    function syncMCQButtons(qId) {
+      const selectedKey = state.answers[qId];
+      document.querySelectorAll(`.option-btn[data-qid="${qId}"]`).forEach(b => {
+        b.classList.toggle('selected', b.dataset.key === selectedKey);
+      });
+    }
+
+    function syncTFButtons(qId) {
+      const val = state.answers[qId];
+      document.querySelectorAll(`.tf-btn[data-qid="${qId}"]`).forEach(b => {
+        const bVal = b.dataset.val === 'true';
+        b.classList.toggle('selected', typeof val === 'boolean' && bVal === val);
+      });
+    }
+
+    /** رسم وتحديث سؤال سحب وإفلات واحد (يدعم السحب بالماوس + النقر للهاتف) */
+    function renderDndQuestion(q) {
+      const poolEl = document.getElementById(`dnd-pool-${q.id}`);
+      const slotsEl = document.getElementById(`dnd-slots-${q.id}`);
+      const placedMap = state.answers[q.id] || {};
+      const placedItemIds = Object.values(placedMap);
+
+      // البطاقات المتبقية في الحوض
+      const availableItems = q.items.filter(it => !placedItemIds.includes(it.id));
+
+      if (availableItems.length === 0) {
+        poolEl.innerHTML = `<div class="dnd-pool-empty">تم توزيع جميع البطاقات في الخانات — يمكنك إزالة أي بطاقة لتعديل إجابتك</div>`;
+      } else {
+        poolEl.innerHTML = availableItems.map(it => {
+          const isSelected = state.selectedChip && state.selectedChip.qId === q.id && state.selectedChip.itemId === it.id;
+          return `
+            <div class="drag-chip ${isSelected ? 'chip-selected' : ''}"
+                 draggable="${!state.submitted}"
+                 data-qid="${q.id}"
+                 data-itemid="${it.id}">
+              <span>⠿</span>
+              <span>${it.label}</span>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // الخانات المستهدفة
+      slotsEl.innerHTML = q.slots.map(slot => {
+        const itemId = placedMap[slot.id];
+        const placedItem = itemId ? q.items.find(it => it.id === itemId) : null;
+        const isReady = !state.submitted && state.selectedChip && state.selectedChip.qId === q.id;
+
+        let statusClass = '';
+        let correctionHTML = '';
+        if (state.submitted) {
+          const isRight = itemId === slot.correctItemId;
+          statusClass = isRight ? 'slot-correct' : 'slot-wrong';
+          if (!isRight) {
+            const correctItem = q.items.find(it => it.id === slot.correctItemId);
+            correctionHTML = `<div class="slot-correction">الإجابة الصحيحة: ${correctItem.label}</div>`;
+          }
+        }
+
+        return `
+          <div class="dnd-slot-card">
+            <div class="dnd-slot-label">${slot.label}</div>
+            <div class="drop-zone ${placedItem ? 'filled' : ''} ${isReady ? 'ready-target' : ''} ${statusClass}"
+                 data-qid="${q.id}"
+                 data-slotid="${slot.id}">
+              ${placedItem ? `
+                <div class="placed-chip-wrap">
+                  <span>${placedItem.label}</span>
+                  ${!state.submitted ? `<button type="button" class="remove-chip-btn" data-qid="${q.id}" data-slotid="${slot.id}" title="إرجاع البطاقة">×</button>` : ''}
+                </div>
+              ` : `<span class="drop-placeholder">أفلت البطاقة هنا أو انقر للوضع</span>`}
+            </div>
+            ${correctionHTML}
+          </div>
+        `;
+      }).join('');
+
+      if (state.submitted) return;
+
+      // أحداث البطاقات (سحب + نقر)
+      poolEl.querySelectorAll('.drag-chip').forEach(chip => {
+        chip.addEventListener('dragstart', (e) => {
+          chip.classList.add('dragging');
+          e.dataTransfer.setData('text/plain', JSON.stringify({
+            qId: q.id,
+            itemId: chip.dataset.itemid
+          }));
+          state.selectedChip = { qId: q.id, itemId: chip.dataset.itemid };
+        });
+
+        chip.addEventListener('dragend', () => {
+          chip.classList.remove('dragging');
+        });
+
+        chip.addEventListener('click', () => {
+          const itemId = chip.dataset.itemid;
+          if (state.selectedChip && state.selectedChip.qId === q.id && state.selectedChip.itemId === itemId) {
+            state.selectedChip = null;
+          } else {
+            state.selectedChip = { qId: q.id, itemId };
+          }
+          markInteracted();
+          renderDndQuestion(q);
+        });
+      });
+
+      // أحداث الخانات المستهدفة (إفلات + نقر)
+      slotsEl.querySelectorAll('.drop-zone').forEach(zone => {
+        zone.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          zone.classList.add('drag-over');
+        });
+
+        zone.addEventListener('dragleave', () => {
+          zone.classList.remove('drag-over');
+        });
+
+        zone.addEventListener('drop', (e) => {
+          e.preventDefault();
+          zone.classList.remove('drag-over');
+          try {
+            const payload = JSON.parse(e.dataTransfer.getData('text/plain'));
+            if (payload && payload.qId === q.id && payload.itemId) {
+              placeItemInSlot(q, zone.dataset.slotid, payload.itemId);
+            }
+          } catch { /* ignore */ }
+        });
+
+        zone.addEventListener('click', (e) => {
+          if (e.target.closest('.remove-chip-btn')) return;
+          if (state.selectedChip && state.selectedChip.qId === q.id) {
+            placeItemInSlot(q, zone.dataset.slotid, state.selectedChip.itemId);
+          } else if (placedMap[zone.dataset.slotid]) {
+            // عند النقر على خانة ممتلئة بدون بطاقة محددة، نعيد البطاقة للحوض لتسهيل التعديل
+            delete state.answers[q.id][zone.dataset.slotid];
+            markInteracted();
+            renderDndQuestion(q);
+            updateProgressUI();
+          }
+        });
+      });
+
+      // زر إزالة البطاقة من الخانة
+      slotsEl.querySelectorAll('.remove-chip-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          delete state.answers[q.id][btn.dataset.slotid];
+          state.selectedChip = null;
+          markInteracted();
+          renderDndQuestion(q);
+          updateProgressUI();
+        });
+      });
+    }
+
+    function placeItemInSlot(q, slotId, itemId) {
+      // إزالة البطاقة من أي خانة أخرى إذا كانت موجودة
+      Object.keys(state.answers[q.id]).forEach(k => {
+        if (state.answers[q.id][k] === itemId) delete state.answers[q.id][k];
+      });
+      state.answers[q.id][slotId] = itemId;
+      state.selectedChip = null;
+      markInteracted();
+      renderDndQuestion(q);
+      updateProgressUI();
+    }
+
+    /** تطبيق نمط عرض جميع الأسئلة أو سؤال بسؤال */
+    function applyViewMode() {
+      const stepNavBar = document.getElementById('stepNavBar');
+      const cards = document.querySelectorAll('.question-card');
+
+      if (state.viewMode === 'all') {
+        cards.forEach(c => c.classList.remove('hidden-step'));
+        stepNavBar.style.display = 'none';
+      } else {
+        cards.forEach((c, idx) => {
+          c.classList.toggle('hidden-step', idx !== state.currentStepIdx);
+        });
+        stepNavBar.style.display = 'flex';
+        document.getElementById('stepIndicator').textContent = `السؤال ${toArNum(state.currentStepIdx + 1)} من ${toArNum(QUESTIONS.length)}`;
+        document.getElementById('prevQuestionBtn').disabled = state.currentStepIdx === 0;
+        document.getElementById('nextQuestionBtn').disabled = state.currentStepIdx === QUESTIONS.length - 1;
+      }
+
+      document.getElementById('modeAllBtn').classList.toggle('active', state.viewMode === 'all');
+      document.getElementById('modeStepBtn').classList.toggle('active', state.viewMode === 'step');
+      updateProgressUI();
+    }
+
+    /* ========================================================================
+       ٨. نظام التصحيح وحساب النتيجة وقفل المحاولة الواحدة
+       ======================================================================== */
+    function getGradeLabel(pct) {
+      if (pct >= 90) return 'ممتاز 🌟';
+      if (pct >= 80) return 'جيد جداً 👏';
+      if (pct >= 70) return 'جيد 👍';
+      if (pct >= 50) return 'مقبول 📘';
+      return 'يحتاج مراجعة ✏️';
+    }
+
+    function evaluateAnswers() {
+      let score = 0;
+      const questionResults = QUESTIONS.map(q => {
+        let correct = false;
+        let userDisplay = 'لم يُجب';
+        let correctDisplay = '';
+
+        if (q.type === 'mcq') {
+          const ans = state.answers[q.id];
+          correct = ans === q.correctKey;
+          const optUser = q.options.find(o => o.key === ans);
+          const optCorrect = q.options.find(o => o.key === q.correctKey);
+          userDisplay = optUser ? `${optUser.key}) ${stripTags(optUser.html)}` : 'لم يُجب';
+          correctDisplay = `${optCorrect.key}) ${stripTags(optCorrect.html)}`;
+        } else if (q.type === 'tf') {
+          const ans = state.answers[q.id];
+          correct = ans === q.correctValue;
+          userDisplay = typeof ans === 'boolean' ? (ans ? 'صح' : 'خطأ') : 'لم يُجب';
+          correctDisplay = q.correctValue ? 'صح' : 'خطأ';
+        } else if (q.type === 'dnd') {
+          const ansMap = state.answers[q.id] || {};
+          correct = q.slots.every(s => ansMap[s.id] === s.correctItemId);
+          userDisplay = q.slots.map(s => {
+            const it = q.items.find(i => i.id === ansMap[s.id]);
+            return `${s.label}: ${it ? it.label : '—'}`;
+          }).join(' | ');
+          correctDisplay = q.slots.map(s => {
+            const it = q.items.find(i => i.id === s.correctItemId);
+            return `${s.label}: ${it.label}`;
+          }).join(' | ');
+        }
+
+        if (correct) score++;
+        return { qId: q.id, correct, userDisplay, correctDisplay };
+      });
+
+      const total = QUESTIONS.length;
+      const percentage = Math.round((score / total) * 100);
+      return {
+        score,
+        total,
+        percentage,
+        gradeLabel: getGradeLabel(percentage),
+        questionResults
+      };
+    }
+
+    function stripTags(html) {
+      const tmp = document.createElement('div');
+      tmp.innerHTML = html.replace(/<span class="frac"><span class="num">(.*?)<\/span><span class="den">(.*?)<\/span><\/span>/g, '$1/$2');
+      return tmp.textContent || tmp.innerText || '';
+    }
+
+    /** عرض النتيجة النهائية وتلوين جميع الأسئلة وقفل التعديل */
+    function applySubmittedReview(record, isPreviouslyLocked = false) {
+      state.submitted = true;
+      state.submittedRecord = record;
+
+      // استرجاع إجابات الطالب في الواجهة إذا كانت محفوظة
+      if (record.answers) {
+        state.answers = record.answers;
+      }
+
+      // التبديل لعرض جميع الأسئلة لسهولة المراجعة
+      state.viewMode = 'all';
+      applyViewMode();
+
+      // إظهار بطاقة النتيجة
+      const card = document.getElementById('resultCard');
+      card.classList.add('show');
+      document.getElementById('lockBanner').style.display = isPreviouslyLocked ? 'inline-block' : 'none';
+      document.getElementById('resScoreNum').textContent = `${toArNum(record.score)} / ${toArNum(record.total)}`;
+      document.getElementById('resPercent').textContent = `${toArNum(record.percentage)}٪`;
+      document.getElementById('resStudentName').textContent = record.studentName;
+      const secText = record.section && record.section !== 'غير محدد' ? `الشعبة: ${record.section} • ` : '';
+      document.getElementById('resSectionTime').textContent = `${secText}وقت التسليم: ${formatArabicDate(record.submittedAt)}`;
+      document.getElementById('resCorrectCount').textContent = toArNum(record.score);
+      document.getElementById('resWrongCount').textContent = toArNum(record.total - record.score);
+      document.getElementById('resGradeLabel').textContent = record.gradeLabel;
+
+      // إخفاء منطقة التصحيح لمنع إعادة الإرسال
+      document.getElementById('submitZone').style.display = 'none';
+
+      // قفل وتلوين كل سؤال وإظهار التغذية الراجعة
+      QUESTIONS.forEach((q, idx) => {
+        const qr = record.questionResults[idx];
+        const qCard = document.getElementById(`q-card-${q.id}`);
+        qCard.classList.remove('state-correct', 'state-wrong');
+        qCard.classList.add(qr.correct ? 'state-correct' : 'state-wrong');
+
+        if (q.type === 'mcq') {
+          syncMCQButtons(q.id);
+          qCard.querySelectorAll('.option-btn').forEach(btn => {
+            btn.disabled = true;
+            if (btn.dataset.key === q.correctKey) {
+              btn.classList.add('opt-correct');
+            } else if (btn.dataset.key === state.answers[q.id] && !qr.correct) {
+              btn.classList.add('opt-wrong');
+            }
+          });
+        } else if (q.type === 'tf') {
+          syncTFButtons(q.id);
+          qCard.querySelectorAll('.tf-btn').forEach(btn => {
+            btn.disabled = true;
+            const bVal = btn.dataset.val === 'true';
+            if (bVal === q.correctValue) {
+              btn.classList.add('opt-correct');
+            } else if (bVal === state.answers[q.id] && !qr.correct) {
+              btn.classList.add('opt-wrong');
+            }
+          });
+        } else if (q.type === 'dnd') {
+          renderDndQuestion(q);
+        }
+
+        const fb = document.getElementById(`q-fb-${q.id}`);
+        fb.className = `q-feedback show ${qr.correct ? 'fb-ok' : 'fb-no'}`;
+        fb.innerHTML = `
+          <strong>${qr.correct ? '✔ إجابة صحيحة!' : '✘ إجابة غير صحيحة.'}</strong>
+          ${!qr.correct ? `<div style="margin-top:4px;"><strong>الإجابة الصحيحة:</strong> ${qr.correctDisplay}</div>` : ''}
+          <div style="margin-top:4px; opacity:0.95;">${q.explanation}</div>
+        `;
+      });
+
+      updateProgressUI();
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function formatArabicDate(isoStr) {
+      try {
+        const d = new Date(isoStr);
+        return d.toLocaleString('ar-EG', {
+          year: 'numeric',
+          month: 'short',
+          day: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+      } catch {
+        return isoStr || '';
+      }
+    }
+
+    /* ========================================================================
+       ٩. إدارة النوافذ المنبثقة وسير عمل التصحيح ولوحة المعلم
+       ======================================================================== */
+    function openModal(id) {
+      document.getElementById(id).classList.add('open');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.remove('open');
+    }
+
+    document.querySelectorAll('[data-close]').forEach(btn => {
+      btn.addEventListener('click', () => closeModal(btn.dataset.close));
+    });
+
+    document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
+      backdrop.addEventListener('click', (e) => {
+        if (e.target === backdrop) backdrop.classList.remove('open');
+      });
+    });
+
+    // الضغط على زر "تصحيح الإجابات"
+    document.getElementById('gradeBtn').addEventListener('click', () => {
+      if (state.submitted) {
+        showToast('تم تسليم حلك مسبقاً ولا يمكن إعادة الإرسال.', 'warn');
+        return;
+      }
+
+      const unanswered = QUESTIONS.filter(q => !isQuestionAnswered(q));
+      if (unanswered.length > 0) {
+        document.getElementById('unansweredMessage').textContent =
+          `يوجد ${toArNum(unanswered.length)} سؤال غير مجاب عنه حتى الآن. هل ترغب في العودة لإكمالها أم المتابعة للتصحيح؟`;
+        const listEl = document.getElementById('unansweredList');
+        listEl.innerHTML = unanswered.map(q =>
+          `<button type="button" class="btn btn-outline btn-sm jump-unanswered" data-qid="${q.id}">السؤال ${toArNum(q.id)}</button>`
+        ).join('');
+        listEl.querySelectorAll('.jump-unanswered').forEach(b => {
+          b.addEventListener('click', () => {
+            const qId = Number(b.dataset.qid);
+            const idx = QUESTIONS.findIndex(item => item.id === qId);
+            closeModal('unansweredModal');
+            state.currentStepIdx = idx;
+            if (state.viewMode === 'step') {
+              applyViewMode();
+            } else {
+              document.getElementById(`q-card-${qId}`).scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          });
+        });
+        openModal('unansweredModal');
+      } else {
+        openStudentInfoModal();
+      }
+    });
+
+    document.getElementById('proceedSubmitAnywayBtn').addEventListener('click', () => {
+      closeModal('unansweredModal');
+      openStudentInfoModal();
+    });
+
+    function openStudentInfoModal() {
+      const errEl = document.getElementById('studentNameError');
+      errEl.classList.remove('show');
+      errEl.textContent = '';
+      openModal('studentInfoModal');
+      setTimeout(() => document.getElementById('studentNameInput').focus(), 100);
+    }
+
+    // تأكيد اسم الطالب وحفظ النتيجة في قاعدة البيانات
+    document.getElementById('confirmGradeSubmitBtn').addEventListener('click', async () => {
+      const nameInput = document.getElementById('studentNameInput');
+      const sectionSelect = document.getElementById('studentSectionSelect');
+      const errEl = document.getElementById('studentNameError');
+      const submitBtn = document.getElementById('confirmGradeSubmitBtn');
+
+      const studentName = nameInput.value.trim().replace(/\s+/g, ' ');
+      if (studentName.length < 3) {
+        errEl.textContent = 'يرجى إدخال اسم الطالب الكامل بشكل صحيح.';
+        errEl.classList.add('show');
+        return;
+      }
+
+      // التحقق من قيد الجهاز
+      if (safeGetStorage(STORAGE_KEYS.SUBMITTED_RECORD)) {
+        errEl.textContent = 'تم تسليم حل مسبقاً من هذا الجهاز ولا يمكن الإرسال مرة أخرى.';
+        errEl.classList.add('show');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'جاري حفظ النتيجة...';
+
+      try {
+        // التحقق من تكرار اسم الطالب في قاعدة البيانات
+        const duplicate = await DB.isNameDuplicate(studentName);
+        if (duplicate) {
+          errEl.textContent = 'هذا الاسم قام بتسليم حل مسبقاً؛ يُسمح لكل طالب بمحاولة واحدة فقط.';
+          errEl.classList.add('show');
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'تأكيد وإظهار النتيجة';
+          return;
+        }
+
+        const evalResult = evaluateAnswers();
+        const record = {
+          studentName,
+          section: sectionSelect.value || 'غير محدد',
+          score: evalResult.score,
+          total: evalResult.total,
+          percentage: evalResult.percentage,
+          gradeLabel: evalResult.gradeLabel,
+          answers: JSON.parse(JSON.stringify(state.answers)),
+          questionResults: evalResult.questionResults,
+          deviceId: getDeviceId(),
+          submittedAt: new Date().toISOString()
+        };
+
+        await DB.addSubmission(record);
+        safeSetStorage(STORAGE_KEYS.SUBMITTED_RECORD, JSON.stringify(record));
+
+        closeModal('studentInfoModal');
+        applySubmittedReview(record, false);
+        showToast(`أحسنت يا ${studentName}! تم حفظ نتيجتك بنجاح.`, 'success');
+      } catch (err) {
+        console.error(err);
+        errEl.textContent = 'حدث خطأ أثناء الحفظ، يرجى المحاولة مرة أخرى.';
+        errEl.classList.add('show');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'تأكيد وإظهار النتيجة';
+      }
+    });
+
+    /* ========================================================================
+       ١٠. لوحة المعلم (رمز المرور 2026 + الإحصائيات + الجدول + التصدير CSV)
+       ======================================================================== */
+    const TEACHER_PIN = '2026';
+
+    function openTeacherAuth() {
+      const pinInput = document.getElementById('teacherPinInput');
+      const errEl = document.getElementById('teacherPinError');
+      pinInput.value = '';
+      errEl.classList.remove('show');
+      openModal('teacherPinModal');
+      setTimeout(() => pinInput.focus(), 100);
+    }
+
+    ['stickyTeacherBtn', 'heroTeacherBtn', 'footerTeacherBtn'].forEach(id => {
+      document.getElementById(id).addEventListener('click', openTeacherAuth);
+    });
+
+    async function verifyTeacherPin() {
+      const val = document.getElementById('teacherPinInput').value.trim();
+      const errEl = document.getElementById('teacherPinError');
+      if (val === TEACHER_PIN) {
+        closeModal('teacherPinModal');
+        openModal('teacherDashModal');
+        DB.updateStatusBadge();
+        await DB.fetchAll();
+        renderTeacherDashboard();
+      } else {
+        errEl.classList.add('show');
+      }
+    }
+
+    document.getElementById('verifyPinBtn').addEventListener('click', verifyTeacherPin);
+    document.getElementById('teacherPinInput').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') verifyTeacherPin();
+    });
+
+    function renderTeacherDashboard() {
+      const searchVal = (document.getElementById('teacherSearchInput').value || '').trim().toLowerCase();
+      const allData = DB.submissionsCache || [];
+      const filtered = allData.filter(item => {
+        if (!searchVal) return true;
+        return (item.studentName || '').toLowerCase().includes(searchVal) ||
+               (item.section || '').toLowerCase().includes(searchVal);
+      });
+
+      // الإحصائيات الفورية على كافة المشاركين
+      const total = allData.length;
+      document.getElementById('kpiTotal').textContent = toArNum(total);
+      if (total > 0) {
+        const scores = allData.map(r => Number(r.score) || 0);
+        const avg = (scores.reduce((a, b) => a + b, 0) / total).toFixed(1);
+        const max = Math.max(...scores);
+        const min = Math.min(...scores);
+        document.getElementById('kpiAvg').textContent = `${toArNum(avg)} / ١٥`;
+        document.getElementById('kpiMax').textContent = toArNum(max);
+        document.getElementById('kpiMin').textContent = toArNum(min);
+      } else {
+        document.getElementById('kpiAvg').textContent = '٠ / ١٥';
+        document.getElementById('kpiMax').textContent = '٠';
+        document.getElementById('kpiMin').textContent = '٠';
+      }
+
+      const tbody = document.getElementById('teacherTableBody');
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 24px; color: var(--text-muted);">لا توجد استجابات مطابقة للعرض.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map((rec, idx) => `
+        <tr>
+          <td><strong>${toArNum(idx + 1)}</strong></td>
+          <td><strong>${escapeHTML(rec.studentName)}</strong></td>
+          <td>${escapeHTML(rec.section || 'غير محدد')}</td>
+          <td><strong>${toArNum(rec.score)} / ${toArNum(rec.total || 15)}</strong></td>
+          <td>${toArNum(rec.percentage)}٪</td>
+          <td style="font-size: 0.84rem; color: var(--text-muted);">${formatArabicDate(rec.submittedAt)}</td>
+          <td>
+            <button type="button" class="btn btn-outline btn-sm view-detail-btn" data-index="${idx}">عرض التفاصيل</button>
+          </td>
+        </tr>
+      `).join('');
+
+      tbody.querySelectorAll('.view-detail-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const rec = filtered[Number(btn.dataset.index)];
+          openStudentDetail(rec);
+        });
+      });
+    }
+
+    function escapeHTML(str) {
+      return String(str || '').replace(/[&<>"']/g, m => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[m]));
+    }
+
+    function openStudentDetail(rec) {
+      document.getElementById('studentDetailHeader').textContent =
+        `الطالب: ${rec.studentName} | الشعبة: ${rec.section || 'غير محدد'} | العلامة: ${toArNum(rec.score)} من ${toArNum(rec.total || 15)} (${toArNum(rec.percentage)}٪)`;
+
+      const body = document.getElementById('studentDetailBody');
+      const results = rec.questionResults || [];
+      body.innerHTML = results.map(qr => `
+        <div class="detail-row ${qr.correct ? 'ok' : 'no'}">
+          <div style="font-weight: 800; margin-bottom: 4px;">
+            السؤال ${toArNum(qr.qId)} — ${qr.correct ? '✔ صحيح' : '✘ خطأ'}
+          </div>
+          <div><strong>إجابة الطالب:</strong> ${escapeHTML(qr.userDisplay)}</div>
+          ${!qr.correct ? `<div style="color: var(--emerald-dark);"><strong>الإجابة الصحيحة:</strong> ${escapeHTML(qr.correctDisplay)}</div>` : ''}
+        </div>
+      `).join('');
+
+      openModal('studentDetailModal');
+    }
+
+    document.getElementById('teacherSearchInput').addEventListener('input', renderTeacherDashboard);
+
+    document.getElementById('refreshResultsBtn').addEventListener('click', async () => {
+      await DB.fetchAll();
+      renderTeacherDashboard();
+      showToast('تم تحديث سجل النتائج.', 'success');
+    });
+
+    // تصدير النتائج إلى ملف Excel (CSV) بدعم كامل للعربية UTF-8 BOM
+    document.getElementById('exportCsvBtn').addEventListener('click', () => {
+      const data = DB.submissionsCache || [];
+      if (data.length === 0) {
+        showToast('لا توجد نتائج لتصديرها حالياً.', 'warn');
+        return;
+      }
+
+      const headers = ['الرقم', 'اسم الطالب', 'الشعبة', 'العلامة من 15', 'النسبة المئوية', 'التقدير', 'وقت التسليم'];
+      const rows = data.map((r, i) => [
+        i + 1,
+        `"${(r.studentName || '').replace(/"/g, '""')}"`,
+        `"${(r.section || 'غير محدد').replace(/"/g, '""')}"`,
+        r.score,
+        `${r.percentage}%`,
+        `"${(r.gradeLabel || '').replace(/"/g, '""')}"`,
+        `"${formatArabicDate(r.submittedAt)}"`
+      ]);
+
+      const csvContent = '\uFEFF' + [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'نتائج_ورقة_عمل_الاقتران_التاسع.csv';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast('تم تحميل ملف النتائج بنجاح.', 'success');
+    });
+
+    /* ========================================================================
+       ١١. سلوك الترويسة المتحوّلة للشريط المدمج + أزرار نمط العرض
+       ======================================================================== */
+    function updateStickyVisibility() {
+      const hero = document.getElementById('topHeader');
+      const stickyBar = document.getElementById('stickyBar');
+      const rect = hero.getBoundingClientRect();
+      const scrolledPastHero = rect.bottom < 20;
+      if (scrolledPastHero || (state.hasInteracted && window.scrollY > 120)) {
+        stickyBar.classList.add('visible');
+      } else {
+        stickyBar.classList.remove('visible');
+      }
+    }
+
+    window.addEventListener('scroll', updateStickyVisibility, { passive: true });
+
+    // تحديث التبويب النشط في شريط التنقل السريع
+    document.querySelectorAll('.nav-pill').forEach(link => {
+      link.addEventListener('click', () => {
+        document.querySelectorAll('.nav-pill').forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+      });
+    });
+
+    // أزرار التبديل بين عرض جميع الأسئلة وعرض سؤال بسؤال
+    document.getElementById('modeAllBtn').addEventListener('click', () => {
+      state.viewMode = 'all';
+      applyViewMode();
+    });
+
+    document.getElementById('modeStepBtn').addEventListener('click', () => {
+      state.viewMode = 'step';
+      applyViewMode();
+    });
+
+    document.getElementById('prevQuestionBtn').addEventListener('click', () => {
+      if (state.currentStepIdx > 0) {
+        state.currentStepIdx--;
+        applyViewMode();
+      }
+    });
+
+    document.getElementById('nextQuestionBtn').addEventListener('click', () => {
+      if (state.currentStepIdx < QUESTIONS.length - 1) {
+        state.currentStepIdx++;
+        applyViewMode();
+      }
+    });
+
+    /* ========================================================================
+       ١٢. التشغيل المبدئي عند تحميل الصفحة
+       ======================================================================== */
+    async function bootstrap() {
+      renderExampleDiagrams();
+      renderQuestionMap();
+      renderAllQuestions();
+      await DB.init();
+
+      // التحقق مما إذا كان هذا الجهاز قد سلّم حلاً مسبقاً (قيد المحاولة الواحدة)
+      const savedRaw = safeGetStorage(STORAGE_KEYS.SUBMITTED_RECORD);
+      if (savedRaw) {
+        try {
+          const savedRecord = JSON.parse(savedRaw);
+          if (savedRecord && savedRecord.studentName) {
+            applySubmittedReview(savedRecord, true);
+          }
+        } catch { /* تجاهل البيانات التالفة */ }
+      }
+
+      // تهيئة أصوات النطق في المتصفحات التي تحمّلها بشكل غير متزامن
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.getVoices();
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', bootstrap);
+  </script>
+</body>
+</html>
